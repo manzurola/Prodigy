@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="core.js"></script>
+    <script src="utils.js"></script>
+    <!--<script src="challenges.js"></script>-->
+    <style>
+        .test {
+
+            position: absolute;
+            -webkit-animation-name: rotateit;
+            -webkit-animation-iteration-count: 1;
+            -webkit-animation-duration: 300ms;
+            -webkit-animation-direction: normal;
+            -webkit-animation-timing-function: ease;
+        }
+
+        .boxed {
+            width: 10em;
+            height: 10em;
+            background-color: blue;
+            position: relative;
+            display: inline-block;
+        }
+
+        @-webkit-keyframes rotateit{
+            0%{
+
+                -webkit-transform: rotate(-335deg);
+            }
+            100%{
+                -webkit-transform: rotate(-25deg);
+                display: none;
+
+            }
+        }
+    </style>
+</head>
+<body>
+<script>
+
+    window.onload = function () {
+
+        //        var visual = Object.create(Entity);
+        //        visual.init(document.createElement('div'), {});
+        //
+        //        var layer = document.getElementById('layer');
+        //        var view = document.createElement('div');
+        //        var box = Object.create(BoxedVisual);
+        //        box.init(document.createElement('div'), {});
+        //
+        //        console.log(typeof box);
+        //        layer.appendChild(view);
+        //        console.log(Object.getPrototypeOf(box));
+        //
+        //        var pb = Object.create(ProgressBar);
+        //        pb.init(document.createElement('div'), {});
+        //        pb.progress = 1;
+
+//            var e = new Entity();
+//        var layer = document.getElementById('layer');
+//        var elem = document.createElement('div');
+//        var v = new Visual(elem, {}).decorate('boxed');
+//        layer.appendChild(elem);
+        var obj = {};
+        Utils.getset(obj, {name: 'guy'});
+        console.log(obj);
+        console.log(obj.name('hoo').name());
+
+        if (-1) {
+            console.log('hey');
+        } else {
+            console.log('no');
+        }
+//        var pbar = new ProgressBar({element: document.createElement('div')});
+//        visual.append(new Visual({element: document.createElement('div')}));
+//        for (var i = 0; i < visual.children.length; i++) {
+//            console.log(visual.children[i] instanceof Visual);
+//        }
+//        console.log(Object.getPrototypeOf(visual));
+//        console.log(visual.children.length);
+//
+//        var e = new Entity({
+//            name: 'guy',
+//            last: 'man'
+//        });
+//        console.log(e);
+    };
+
+</script>
+<div class='test'>TESTING</div>
+<div id="layer"></div>
+</body>
+</html>
