@@ -1,1 +1,0 @@
-function logIt(a){console.log(a,+new Date())};
