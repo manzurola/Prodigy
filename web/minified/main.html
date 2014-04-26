@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Prodigy</title>
+    <link rel="stylesheet" type="html/css" href="main-min.css"/>
+    <link rel="stylesheet" type="html/css" href="game-min.css"/>
+    <link rel="stylesheet" type="html/css" href="exerciseFailedScreen-min.css"/>
+    <link rel="stylesheet" type="html/css" href="exerciseClearedScreen-min.css"/>
+    <link rel="stylesheet" type="html/css" href="welcome-min.css"/>
+    <link rel="stylesheet" type="html/css" href="subjects-min.css"/>
+    <link rel="stylesheet" type="html/css" href="exercises-min.css"/>
+    <link rel="stylesheet" type="html/css" href="pausedScreen-min.css"/>
+    <script src="logger-min.js"></script>
+    <script src="shared-min.js"></script>
+    <script src="entities-min.js"></script>
+    <script src="welcome-min.js"></script>
+    <script src="subjects-min.js"></script>
+    <script src="exercises-min.js"></script>
+    <script src="pausedScreen-min.js"></script>
+    <script src="exerciseFailedScreen-min.js"></script>
+    <script src="exerciseClearedScreen-min.js"></script>
+    <script src="game-min.js"></script>
+    <script src="main-min.js"></script>
+</head>
+
+<body>
+<div id="prodigy">
+    <!-- insert dynamic content in here-->
+    <!-- WELCOME SCREEN START -->
+    <!--<div id="welcome" class="screen">-->
+        <!--<div class="title" title="PRODIGY">PRODIGY</div>-->
+        <!--<div class="slogan question">power up your grammar</div>-->
+        <!--<span id="btnStart" class="multichoice">start</span>-->
+    <!--</div>-->
+    <!-- END WELCOME SCREEN -->
+    <!-- SUBJECTS SCREEN START -->
+    <div id="subjects" class="screen">
+        <div id="backButtonSubjectSelectionScreen" class="backButton"></div>
+        <div id="subjectSelectionTitle" class="question">Select a Subject</div>
+        <ul id="subjectList" class="list"></ul>
+    </div><!-- END SUBJECTS SCREEN -->
+    <!-- EXERCISES SCREEN START -->
+    <div id="exercises" class='screen'>
+        <div id="backButtonExerciseSelectionScreen" class="backButton"></div>
+        <div id="exerciseSelectionTitle" class="question">Select an Exercise</div>
+        <ul id="exerciseList" class="list"></ul>
+    </div>
+    <div id="game" class="screen">
+    </div>
+    <!-- END GAME SCREEN -->
+    <!-- PAUSE_SCREEN SCREEN START -->
+    <div id='pausedScreen' class='screen'>
+        <div class='title'>PAUSED</div>
+        <!--<div id="pausedScreen_subject">subject</div>-->
+        <!--<br>-->
+        <!--<div id="pausedScreen_exerciseTitle">title</div>-->
+        <!--<br><br><br>-->
+        <div class='menu'>
+            <div class='menuButton' id="pausedScreen_resume">resume</div>
+            <br>
+            <div class='menuButton' id="pausedScreen_restart">restart</div>
+            <br>
+            <div class='menuButton' id="pausedScreen_quit">quit</div>
+            <br>
+        </div>
+    </div>
+    <!-- END PAUSE_SCREEN SCREEN -->
+    <!-- EXERCISE_FAILED SCREEN START -->
+    <div id='exerciseFailedScreen' class='screen'>
+        <div class='title'>
+            <span>EXERCISE</span>
+            <span>FAILED</span>
+        </div>
+        <div class='menuButton' id="exerciseFailedScreen-restartButton">restart</div>
+        <br>
+        <div class='menuButton' id="exerciseFailedScreen-quitButton">quit</div>
+    </div>
+    <!-- END EXERCISE_FAILED SCREEN -->
+    <!-- EXERCISE_CLEARED SCREEN START -->
+    <div id='exerciseClearedScreen' class='screen'>
+        <div class='title'><span>EXERCISE</span><span>CLEARED</span></div>
+        <!--<p><span class="star"></span><span id='exerciseClearedScreen-starsCollected'></span>/<span id='exerciseClearedScreen-totalStars'></span></p>-->
+        <!--<p>total score <span id='exerciseClearedScreen-totalScore'></span></p>-->
+        <p><span id='exerciseClearedScreen-grade' class="grade"></span></p>
+        <div class='menuButton' id="exerciseClearedScreen-quitButton">quit</div>
+        <div class='menuButton' id="exerciseClearedScreen-restartButton">restart</div>
+    </div>
+    <!-- END EXERCISE_CLEARED SCREEN -->
+</div>
+</body>
+</html>

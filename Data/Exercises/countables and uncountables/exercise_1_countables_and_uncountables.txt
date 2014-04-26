@@ -1,0 +1,34 @@
+v2
+subject: Countables and Uncountables
+difficultyLevel: Elementary
+title: Put into the plural
+question: A dog is an animal.<br/><br/><span class="blank"></span> <span class="blank"></span> <span class="blank"></span>.
+blank: 0
+answer: 0, Dog, 0
+answer: 0, They, 0
+answer: 0, Dogs, 1
+answer: 0, Are, 0
+blank: 1
+answer: 1, am, 0
+answer: 1, are, 1
+answer: 1, is, 0
+answer: 1, animals, 0
+blank: 2
+answer: 2, are, 0
+answer: 2, animal, 0
+answer: 2, am, 0
+answer: 2, animals, 1
+question: A potato is a vegetable.<br/><br/><span class="blank"></span> <span class="blank"></span> <span class="blank"></span>.
+blank: 0
+answer: 0, Potatoes, 1
+answer: 0, Potato, 0
+answer: 0, Vegetables, 0
+answer: 0, Are, 0
+blank: 1
+answer: 1, is, 0
+answer: 1, are, 1
+answer: 1, am, 0
+blank: 2
+answer: 2, vegetable, 0
+answer: 2, vegetables, 1
+answer: 2, potatoes, 0

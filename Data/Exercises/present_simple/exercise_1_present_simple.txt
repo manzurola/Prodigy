@@ -1,0 +1,73 @@
+v2
+subject: Present Tense
+difficultyLevel: Elementary
+title: Supply The Correct Present Tense
+question: She <span class="blank"></span> to school every day.
+blank: 0
+answer: 0, go, 0, Go is for I, you, we and they
+answer: 0, goes, 1
+answer: 0, going, 0, She is doing it every day..
+answer: 0, is going, 0, She is doing it every day..
+question: We now <span class="blank"></span> English.
+blank: 0
+answer: 0, learning, 0, Aren't you missing something?
+answer: 0, learns, 0, We are doing it now..
+answer: 0, learn, 0, We are doing it now..
+answer: 0, are learning, 1
+question: The sun always <span class="blank"></span> in Egypt.
+blank: 0
+answer: 0, shines, 1
+answer: 0, shine, 0, "The sun" = "it"
+answer: 0, is shining, 0, This happens all the time..
+answer: 0, shining, 0, This happens all the time..
+question: I <span class="blank"></span> on a chair and <span class="blank"></span> a banana.
+blank: 0
+blank: 1
+answer: 0, seat, 0, He is doing it now..
+answer: 0, am seating, 1
+answer: 0, is seating, 0, I + is = bad idea
+answer: 0, seats, 0, He is doing it now..
+answer: 1, am eating, 0, Close.. but does it sound right?
+answer: 1, eat, 0, He is doing it now..
+answer: 1, eating, 1
+answer: 1, eats, 0, He is doing it now..
+question: Bad students never <span class="blank"></span> hard.
+blank: 0
+answer: 0, work, 1
+answer: 0, are works, 0, not even close..
+answer: 0, are working, 0, This is a habit..
+answer: 0, works, 0, "students" = "they"
+question: It <span class="blank"></span> in winter.
+blank: 0
+answer: 0, is rain, 0, mmm... are you sure about that?
+answer: 0, rains, 1
+answer: 0, raining, 0, Is this happening now?
+answer: 0, is raining, 0, When does it rain?
+question: I <span class="blank"></span> up at seven and <span class="blank"></span> breakfast at half past.
+blank: 0
+blank: 1
+answer: 0, am waking, 0, Weak...
+answer: 0, wakes, 0, No need for an "s" there..
+answer: 0, waking, 0, This is a habit.. happens all the time..
+answer: 0, wake, 1
+answer: 1, has, 0, Has is for He, She and It
+answer: 1, have, 1
+answer: 1, am having, 0, This is a habit.. happens all the time..
+answer: 1, eat, 1
+question: He generally <span class="blank"></span> in English but today he <span class="blank"></span> in French.
+blank: 0
+blank: 1
+answer: 0, speaks, 1
+answer: 0, is speaking, 0, Generally..
+answer: 0, speak, 0, Your missing a letter...
+answer: 0, spoke, 0, Spoke is in past tense..
+answer: 1, speaks, 0, He is doing it today.
+answer: 1, is speaking, 1
+answer: 1, speak, 0, Not even close..
+answer: 1, am speaking, 0, Am is for I..
+question: Architects <span class="blank"></span> the plans of buildings.
+blank: 0
+answer: 0, are making, 0
+answer: 0, makes, 0
+answer: 0, are make, 0
+answer: 0, make, 1

@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="model.Score" table="scores" schema="" catalog="prodigy_schema">
+        <id name="id" column="id">
+            <generator class="increment"/>
+        </id>
+        <property name="exerciseId">
+            <column name="exercise_id" sql-type="int" length="10" not-null="true"/>
+        </property>
+        <property name="playerName">
+            <column name="player_name" sql-type="varchar" length="20" not-null="true" />
+        </property>
+        <property name="score">
+            <column name="score" sql-type="int" length="10" not-null="true"/>
+        </property>
+        <many-to-one name="exerciseByExerciseId" class="model.Exercise" insert="false" update="false">
+            <column name="exercise_id" not-null="true"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

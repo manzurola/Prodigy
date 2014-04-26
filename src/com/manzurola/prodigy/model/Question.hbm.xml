@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.manzurola.prodigy.model.Question" table="questions" schema="" catalog="prodigy_schema">
+        <id name="id">
+            <column name="id" sql-type="int" length="10" not-null="true"/>
+            <generator class="increment"/>
+        </id>
+        <property name="html">
+            <column name="html" sql-type="longtext" length="2147483647" not-null="true"/>
+        </property>
+        <property name="exerciseId">
+            <column name="exercise_id" sql-type="int" length="10" not-null="true"/>
+        </property>
+        <property name="index">
+            <column name="idx" sql-type="int" length="10" not-null="true"/>
+        </property>
+        <many-to-one name="exerciseByExerciseId" class="com.manzurola.prodigy.model.Exercise" insert="false" update="false">
+            <column name="exercise_id" not-null="true"/>
+        </many-to-one>
+        <set name="blanksById" inverse="true">
+            <key>
+                <column name="question_id" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="com.manzurola.prodigy.model.Blank"/>
+        </set>
+    </class>
+</hibernate-mapping>

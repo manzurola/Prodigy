@@ -1,0 +1,33 @@
+v2
+subject: Present Progressive
+difficultyLevel: Elementary
+title: Answer The Following Questions
+question: Are you eating anything?<br/>Yes, <span class="blank"></span>.
+blank: 0
+answer: 0, I do, 0
+answer: 0, I am, 1
+answer: 0, I am not, 0
+answer: 0, I are, 0
+question: Do you dance?<br/>Yes, <span class="blank"></span>.
+blank: 0
+answer: 0, I do, 1
+answer: 0, I don't, 0
+answer: 0, I am, 0
+answer: 0, I do not, 0
+question: Does miss Y sing?<br/>No, <span class="blank"></span>.
+blank: 0
+answer: 0, she doesn't, 1
+answer: 0, she does, 0
+answer: 0, she is not, 0
+answer: 0, she isn't, 0
+question: Why are you laughing?<br/>"<span class="blank"></span> know."
+blank: 0
+answer: 0, I don't, 1
+answer: 0, I am not, 0
+answer: 0, I do, 0
+question: Are they learning English?<br/>Yes, <span class="blank"></span>.
+blank: 0
+answer: 0, they are, 1
+answer: 0, they is, 0
+answer: 0, they do, 0
+answer: 0, they are not, 0

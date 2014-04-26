@@ -1,0 +1,57 @@
+#exerciseFailedScreen{
+    text-align: center;
+    padding-top: 10%;
+
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(203,7,17,1) 0%,rgba(101,189,247,0) 100%);
+
+    z-index: 10;
+}
+
+#exerciseFailedScreen .title {
+    display: block;
+    font-size: 2em;
+    margin-right: auto;
+    margin-left: auto;
+    font-family: grobold;
+}
+
+#exerciseFailedScreen .title span:first-child {
+    display: block;
+
+    -webkit-animation-name: textShadow;
+    -webkit-animation-duration: 1200ms;
+    -webkit-animation-play-state: running;
+    -webkit-animation-direction:  normal;
+    -webkit-animation-iteration-count:  1;
+    -webkit-animation-timing-function:  ease;
+}
+
+#exerciseFailedScreen .title span:last-child {
+    display: block;
+    font-size: 1.5em;
+
+    margin-top: -0.2em;
+    /*-webkit-transform: rotate(-8deg);*/
+    /*transform: rotate(-8deg);*/
+    background-color: red;
+    -webkit-background-clip: text;
+    -webkit-text-stroke: 0.05em black;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0.05em 0.075em 0.025em rgba(0,0,0,0.25) !important;
+
+
+    -webkit-animation-name: shakeUpDown, textShadow;
+    -webkit-animation-duration: 170ms, 300ms;
+    -webkit-animation-direction: normal, normal;
+    -webkit-animation-play-state: running, running;
+    -webkit-animation-iteration-count: infinite, 1;
+    -webkit-animation-timing-function: ease-out, ease;
+}
+
+#exerciseFailedScreen .menuButton {
+    margin-right: auto;
+    margin-left: auto;
+    position: relative;
+    display: inline-block;
+}
+

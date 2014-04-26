@@ -1,0 +1,86 @@
+v2
+subject: Present Tense
+difficultyLevel: Elementary
+title: Rewrite into the negative
+question: She goes to school every day...<br/><span class="blank"></span> <span class="blank"></span> <span class="blank"></span> <span class="blank"></span>
+blank: 0
+answer: 0, She, 1
+answer: 0, She's, 0
+blank: 1
+answer: 1, doesn't, 1
+answer: 1, does not, 1
+answer: 1, don't, 0, She does..
+answer: 1, does, 0, negative(does) = doesn't
+blank: 2
+answer: 2, go to school, 1
+answer: 2, goes to school, 0, does + goes = bad idea
+blank: 3
+answer: 3, all the day, 0
+answer: 3, sometimes day, 0
+answer: 3, every day, 1
+answer: 3, never day, 0
+question: He always speaks in English...<br/><span class="blank"></span> <span class="blank"></span> <span class="blank"></span> <span class="blank"></span>
+blank: 0
+answer: 0, You, 0, He = You ?
+answer: 0, He, 1
+blank: 1
+answer: 1, always, 0
+answer: 1, generally, 0
+answer: 1, never, 1
+blank: 2
+answer: 2, speaks, 1
+answer: 2, speak, 0, +s
+answer: 2, not speaks, 0
+answer: 2, doesn't speak, 0
+blank: 3
+answer: 3, in English, 1
+question: Architects make the plans of kitchens...<br/><span class="blank"></span> <span class="blank"></span> <span class="blank"></span>
+blank: 0
+answer: 0, They, 1
+answer: 0, Architects, 1
+blank: 1
+answer: 1, don't make, 1
+answer: 1, usually make, 0, Into The Negative
+answer: 1, doesn't make, 0, Architects = They
+answer: 1, are not making, 0, Is this happening now?
+blank: 2
+answer: 2, the plans of kitchens, 1
+answer: 2, the plans of buildings, 0, Look at the original sentence...
+question: Babies always cry when they are happy...<br/><span class="blank"></span> <span class="blank"></span> <span class="blank"></span>
+blank: 0
+answer: 0, They, 1
+answer: 0, Babies, 1
+blank: 1
+answer: 1, never ever cry, 1
+answer: 1, always cry, 0, Into The Negative
+answer: 1, never cry, 1
+answer: 1, never are crying, 0, Is this happening now?
+blank: 2
+answer: 2, when they are happy, 1
+answer: 2, when they are sad, 0, Look at the original sentence...
+question: Bad students always work hard...<br/><span class="blank"></span> <span class="blank"></span>
+blank: 0
+answer: 0, Bad Students, 1
+answer: 0, Good students, 0, Try harder
+blank: 1
+answer: 1, never work hard, 1
+answer: 1, always work hard, 0, Into The Negative
+answer: 1, never works hard, 1, students = They
+answer: 1, never working hard, 0, Is this happening now?
+question: I am wearing a coat because the sun is shining...<br/><span class="blank"></span> <span class="blank"></span> <span class="blank"></span> <span class="blank"></span>
+blank: 0
+answer: 0, I, 1
+answer: 0, He, 0, Try harder
+blank: 1
+answer: 1, am wearing, 0, Into The Negative
+answer: 1, am not wearing, 1,
+answer: 1, not wearing, 0, pronoun missing (am, is, are...)
+answer: 1, don't wear, 0, This is happening now
+blank: 2
+answer: 2, a coat because the sun, 1
+answer: 2, coat because the sun, 0, missing 'a' before singular noun
+blank: 3
+answer: 3, is not shining, 1
+answer: 3, is shining, 0, Into the negative
+answer: 3, doesn't shine, 0, This is happening now
+answer: 3, does not shining, 0, mmm... does + ing ?

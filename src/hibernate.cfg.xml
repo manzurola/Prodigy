@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+  "-//Hibernate/Hibernate Configuration DTD//EN"
+  "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- using container-managed JNDI -->
+        <property name="connection.datasource">java:comp/env/jdbc/mysqlDB</property>
+        <!--<property name="hbm2ddl.auto">create</property>-->
+        <property name="dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
+        <property name="show_sql">true</property>
+
+        <!--make sure these properties are not active because we are using a container managed JNDI-->
+        <!--<property name="connection.url">jdbc:mysql://localhost:3306/prodigy_schema</property>-->
+        <!--<property name="connection.driver_class">com.mysql.jdbc.Driver</property>-->
+        <!--<property name="connection.username">root</property>-->
+        <!--<property name="connection.password">guy83MNZ</property>-->
+
+
+        <mapping resource="com/manzurola/prodigy/model/Answer.hbm.xml"/>
+        <mapping resource="com/manzurola/prodigy/model/Blank.hbm.xml"/>
+        <mapping resource="com/manzurola/prodigy/model/DifficultyLevel.hbm.xml"/>
+        <mapping resource="com/manzurola/prodigy/model/Exercise.hbm.xml"/>
+        <mapping resource="com/manzurola/prodigy/model/Question.hbm.xml"/>
+        <mapping resource="com/manzurola/prodigy/model/Subject.hbm.xml"/>
+        <mapping resource="com/manzurola/prodigy/model/Score.hbm.xml"/>
+
+    </session-factory>
+</hibernate-configuration>

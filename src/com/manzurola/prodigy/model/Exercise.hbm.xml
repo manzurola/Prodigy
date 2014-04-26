@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.manzurola.prodigy.model.Exercise" table="exercises" schema="" catalog="prodigy_schema">
+        <id name="id">
+            <column name="id" sql-type="int" length="10" not-null="true"/>
+            <generator class="increment"/>
+        </id>
+        <property name="subjectName" insert="false" update="false">
+            <column name="subject_name" sql-type="varchar" length="100" not-null="true"/>
+        </property>
+        <property name="title">
+            <column name="title" sql-type="varchar" length="200" not-null="true"/>
+        </property>
+        <property name="difficultyLevelName" insert="false" update="false">
+            <column name="difficulty_Level_name" sql-type="varchar" length="50" not-null="true"/>
+        </property>
+        <property name="numberOfQuestions">
+            <column name="number_of_questions" sql-type="int" length="10" not-null="true"/>
+        </property>
+        <many-to-one name="subjectBySubjectName" class="com.manzurola.prodigy.model.Subject">
+            <column name="subject_name" not-null="true"/>
+        </many-to-one>
+        <many-to-one name="difficultyLevelsByDifficultyLevelName" class="com.manzurola.prodigy.model.DifficultyLevel">
+            <column name="difficulty_Level_name" not-null="true"/>
+        </many-to-one>
+        <set name="questionsById" inverse="true">
+            <key>
+                <column name="exercise_id" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="com.manzurola.prodigy.model.Question"/>
+        </set>
+        <set name="topScores" inverse="true">
+            <key>
+                <column name="exercise_id" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="com.manzurola.prodigy.model.Score"/>
+        </set>
+    </class>
+</hibernate-mapping>

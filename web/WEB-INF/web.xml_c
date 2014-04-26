@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<web-app>
+    <display-name>Prodigy Application</display-name>
+    <servlet>
+        <servlet-name>Rest</servlet-name>
+        <servlet-class>
+            com.sun.jersey.spi.container.servlet.ServletContainer
+        </servlet-class>
+        <init-param>
+            <param-name>javax.ws.rs.Application</param-name>
+            <param-value>
+                com.manzuorla.prodigy.Prodigy
+            </param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Rest</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
+</web-app>

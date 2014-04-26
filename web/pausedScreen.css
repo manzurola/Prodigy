@@ -1,0 +1,24 @@
+#pausedScreen {
+
+    padding-top: 15%;
+
+    text-align: center;
+
+    /*background: -webkit-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%,rgba(255,255,255,0.5) 100%);*/
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%,rgba(101,189,247,0) 100%);
+    z-index: 10;
+}
+
+
+
+#pausedScreen .title {
+    font-size: 2em;
+    font-family: grobold;
+
+    -webkit-animation-name: textShadow;
+    -webkit-animation-duration: 1200ms;
+    -webkit-animation-play-state: running;
+    -webkit-animation-direction:  normal;
+    -webkit-animation-iteration-count:  1;
+    -webkit-animation-timing-function:  ease;
+}

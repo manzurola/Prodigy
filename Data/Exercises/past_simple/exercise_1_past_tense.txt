@@ -1,0 +1,108 @@
+v2
+subject: Past Tense
+difficultyLevel: Elementary
+title: Supply The Correct Past Tense
+question: He <span class="blank"></span> in a cafe when I <span class="blank"></span> him.
+blank: 0
+blank: 1
+answer: 0, sit, 0
+answer: 0, sat, 0
+answer: 0, was sitting, 1
+answer: 0, was sat, 0
+answer: 1, have seen, 0
+answer: 1, seen, 0,
+answer: 1, saw, 1
+question: When I <span class="blank"></span> out the sun <span class="blank"></span>.
+blank: 0
+blank: 1
+answer: 0, went, 1
+answer: 0, go, 0
+answer: 0, was going, 0
+answer: 1, was shining, 1
+answer: 1, shined, 0,
+answer: 1, has been shining, 0
+question: The boy <span class="blank"></span> down while he <span class="blank"></span>.
+blank: 0
+blank: 1
+answer: 0, fell, 1
+answer: 0, falling, 0
+answer: 0, was falling, 0
+answer: 0, has fell, 0
+answer: 1, running, 0
+answer: 1, was running, 1
+answer: 1, has been running, 0
+answer: 1, ran, 0
+question: When the war <span class="blank"></span> we <span class="blank"></span> in London.
+blank: 0
+blank: 1
+answer: 0, started, 1
+answer: 0, was starting, 0
+answer: 0, has started, 0
+answer: 1, were living, 1
+answer: 1, was living, 0
+answer: 1, lived, 0
+answer: 1, live, 0
+question: The light <span class="blank"></span> while I <span class="blank"></span> tea.
+blank: 0
+blank: 1
+answer: 0, went out, 1
+answer: 0, go out, 0
+answer: 0, has went out, 0
+answer: 1, was drinking, 1
+answer: 1, has been drinking, 0
+answer: 1, drank, 0
+answer: 1, drinking, 0
+question: I <span class="blank"></span> tea when the light <span class="blank"></span>.
+blank: 0
+blank: 1
+answer: 0, was drinking, 1
+answer: 0, drinking, 0
+answer: 0, drank, 0
+answer: 0, was having, 1
+answer: 1, went out, 1
+answer: 1, turned out, 0
+answer: 1, go out, 0
+answer: 1, has went out, 0
+question: My friends <span class="blank"></span> when I <span class="blank"></span> into the room.
+blank: 0
+blank: 1
+answer: 0, sang, 0
+answer: 0, were singing, 1
+answer: 0, was singing, 0
+answer: 1, came, 1
+answer: 1, was coming, 0
+answer: 1, had came, 0
+answer: 1, was came, 0
+question: While you <span class="blank"></span> the piano I <span class="blank"></span> a letter.
+blank: 0
+blank: 1
+answer: 0, played, 0
+answer: 0, were playing, 1
+answer: 0, was playing, 0
+answer: 0, had been playing, 0
+answer: 1, wrote, 1,
+answer: 1, was writing, 1
+answer: 1, had written, 0
+answer: 1, write, 0
+question: When I <span class="blank"></span> at school I <span class="blank"></span> Latin.
+blank: 0
+blank: 1
+answer: 0, was, 1
+answer: 0, were, 0
+answer: 0, had been, 0
+answer: 0, be, 0
+answer: 0, was being, 0
+answer: 1, learnt, 0
+answer: 1, learned, 1
+answer: 1, was learning, 0
+question: He <span class="blank"></span> his dinner when I <span class="blank"></span> to see him.
+blank: 0
+blank: 1
+answer: 0, ate, 0
+answer: 0, was eating, 1
+answer: 0, had eaten, 0
+answer: 0, eating, 0
+answer: 1, went, 1
+answer: 1, was going, 0
+answer: 1, were going, 0
+answer: 1, had went, 0

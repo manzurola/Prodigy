@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="model.Answer" table="answers" schema="" catalog="prodigy_schema">
+        <composite-id mapped="true" class="model.AnswerPK">
+            <key-property name="questionId">
+                <column name="question_id" sql-type="int" length="11" not-null="true"/>
+            </key-property>
+            <key-property name="index" >
+                <column name="idx" sql-type="int" length="11" not-null="true"/>
+            </key-property>
+            <key-property name="token">
+                <column name="token" sql-type="varchar" length="50" not-null="true"/>
+            </key-property>
+        </composite-id>
+        <property name="correct">
+            <column name="correct" sql-type="bit" not-null="true"/>
+        </property>
+        <property name="feedback">
+            <column name="feedback" sql-type="varchar" length="200"/>
+        </property>
+        <many-to-one name="blanks" class="model.Blank" insert="false" update="false">
+            <column name="idx" not-null="true"/>
+            <column name="question_id" not-null="true"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

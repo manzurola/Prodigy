@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<hibernate-mapping xmlns="http://www.hibernate.org/xsd/hibernate-mapping"
+        xsi:schemaLocation="http://www.hibernate.org/xsd/hibernate-mapping http://www.hibernate.org/xsd/hibernate-mapping/hibernate-mapping-4.0.xsd" 
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <class name="com.manzurola.prodigy.domain.Blank" table="blanks" schema="" catalog="prodigy">
+        <composite-id mapped="true" class="com.manzurola.prodigy.domain.BlankPK">
+            <key-property name="questionId">
+                <column name="question_id" sql-type="int" length="10" not-null="true"/>
+            </key-property>
+            <key-property name="idx">
+                <column name="idx" sql-type="int" length="10" not-null="true"/>
+            </key-property>
+        </composite-id>
+        <property name="id">
+            <column name="id" sql-type="int" length="10" not-null="true"/>
+        </property>
+        <many-to-one name="answersById" class="com.manzurola.prodigy.domain.Answer">
+            <column name="id" not-null="true"/>
+        </many-to-one>
+        <many-to-one name="questionsByQuestionId" class="com.manzurola.prodigy.domain.Question">
+            <column name="question_id" not-null="true"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

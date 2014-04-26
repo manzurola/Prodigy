@@ -1,0 +1,10 @@
+v2
+subject: Algebra (bonus)
+difficultyLevel: Elementary
+title: Complete the equations
+question: 1 + <span class="blank"></span> = 4
+blank: 0
+answer: 0, 2, 0
+answer: 0, 4, 0
+answer: 0, 3, 1
+answer: 0, (3x1), 1

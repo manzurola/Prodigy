@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<hibernate-mapping xmlns="http://www.hibernate.org/xsd/hibernate-mapping"
+        xsi:schemaLocation="http://www.hibernate.org/xsd/hibernate-mapping http://www.hibernate.org/xsd/hibernate-mapping/hibernate-mapping-4.0.xsd" 
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <class name="com.manzurola.prodigy.domain.Answer" table="answers" schema="" catalog="prodigy">
+        <composite-id mapped="true" class="com.manzurola.prodigy.domain.AnswerPK">
+            <key-property name="token">
+                <column name="token" sql-type="varchar" length="50" not-null="true"/>
+            </key-property>
+            <key-property name="blankId">
+                <column name="blank_id" sql-type="int" length="10" not-null="true"/>
+            </key-property>
+        </composite-id>
+        <property name="correct">
+            <column name="correct" sql-type="bit" not-null="true"/>
+        </property>
+        <property name="feedback">
+            <column name="feedback" sql-type="varchar" length="200"/>
+        </property>
+        <property name="id">
+            <column name="id" sql-type="int" length="10" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

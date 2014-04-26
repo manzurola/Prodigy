@@ -1,0 +1,75 @@
+v2
+subject: Past Tense
+difficultyLevel: Elementary
+title: Rewrite into the past tense
+question: I break a cup..<br/><span class="blank"></span> <span class="blank"></span> <span class="blank"></span>
+blank: 0
+answer: 0, I, 1
+answer: 0, Broke, 0
+answer: 0, I did, 0
+blank: 1
+answer: 1, broke, 1
+answer: 1, broken, 0
+answer: 1, break, 0
+answer: 1, was breaking, 0
+blank: 2
+answer: 2, a cup, 1
+answer: 2, cup, 0
+question: It begins to rain..<br/><span class="blank"></span> <span class="blank"></span> <span class="blank"></span>
+blank: 0
+answer: 0, It, 1
+answer: 0, It's, 0
+answer: 0, The, 0
+blank: 1
+answer: 1, began, 1
+answer: 1, has began, 0
+answer: 1, begun, 0
+answer: 1, was beginning, 0
+blank: 2
+answer: 2, to rain, 1
+answer: 2, raining, 0
+answer: 2, rains, 0
+answer: 2, rain, 0
+question: You cut your finger..<br/><span class="blank"></span> <span class="blank"></span> <span class="blank"></span>
+blank: 0
+answer: 0, You, 1
+answer: 0, You did, 0
+answer: 0, Cut, 0
+blank: 1
+answer: 1, cut, 1
+answer: 1, cat, 0
+answer: 1, cutted, 0
+answer: 1, was cutting, 0
+blank: 2
+answer: 2, your finger, 1
+answer: 2, finger, 0
+question: He teaches English..<br/><span class="blank"></span> <span class="blank"></span> <span class="blank"></span>
+blank: 0
+answer: 0, He, 1
+answer: 0, He did, 0
+answer: 0, Taught, 0
+blank: 1
+answer: 1, taught, 1
+answer: 1, teaches, 0
+answer: 1, was teach, 0
+answer: 1, did teach, 0
+blank: 2
+answer: 2, English, 1
+answer: 2, French, 0, Come on... REALLY?
+question: You lie to me..<br/><span class="blank"></span> <span class="blank"></span> <span class="blank"></span>
+blank: 0
+answer: 0, You, 1
+answer: 0, Yous, 0
+blank: 1
+answer: 1, lied, 1
+answer: 1, lay, 0
+answer: 1, lieded, 0
+answer: 1, was lying, 0
+blank: 2
+answer: 2, to me, 1
+question: The prisoner runs away..<br/><span class="blank"></span>
+blank: 0
+answer: 0, The prisoner ran away, 1
+answer: 0, The prisoner run away, 0
+answer: 0, The prisoner did run away, 0
+answer: 0, The prisoner was running away, 0

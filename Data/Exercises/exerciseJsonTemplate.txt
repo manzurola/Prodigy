@@ -1,0 +1,30 @@
+{
+	�exercise�:	
+		{
+		subject�: 				
+			{ 
+			�name�: 				STRING 
+			},
+		�number�:					NUMBER,
+		�title�: 					STRING,
+		�difficultyLevel�: 			
+			{ 
+			�level�: 				NUMBER	
+			},
+		�numberOfQuestions�:		NUMBER,
+		�questions�: 				
+			[
+				{	
+				"number": 				NUMBER,
+				"html":
+				"answers":
+					{
+					"blankNumber":
+					"text":
+					"correct":
+					"feedback":
+					}
+				}
+			]
+		}
+}

@@ -1,0 +1,46 @@
+@charset "utf-8";
+
+#exercises {
+    text-align: center;
+    padding-top: 12%;
+
+    z-index: 10;
+}
+
+#exercises #exerciseSelectionTitle {
+    font-size: 1.25em;
+    position: absolute;
+    display: inline-block;
+    top: 3em;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: auto;
+    -webkit-text-fill-color: black;
+}
+
+#exercises #exerciseList{
+    position: absolute;
+    display: block;
+    list-style-type: none;
+    top: 6em;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 70%;
+}
+
+#exercises #exerciseList > * {
+    border: 0.025em ridge black;
+    background: white;
+
+}
+
+#exercises #exerciseList > *:hover {
+    -webkit-text-stroke-color: white;
+    -webkit-text-fill-color: white;
+
+    /*background: #FF3300;*/
+    background: #1a82f7;
+}
+

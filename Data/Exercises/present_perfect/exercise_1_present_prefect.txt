@@ -1,0 +1,84 @@
+v2
+subject: Present Perfect
+difficultyLevel: Elementary
+title: Add "since" or "for"
+question: He has been selling cars <span class="blank"></span> ten years.
+blank: 0
+answer: 0, since, 0
+answer: 0, for, 1
+question: He has been living here <span class="blank"></span> 1934.
+blank: 0
+answer: 0, since, 1
+answer: 0, for, 0
+question: I've been waiting <span class="blank"></span> five o'clock.
+blank: 0
+answer: 0, since, 1
+answer: 0, for, 0
+question: I've been mending your socks <span class="blank"></span> the last two hours.
+blank: 0
+answer: 0, since,0
+answer: 0, for, 1
+question: We've been reading this book <span class="blank"></span> last January.
+blank: 0
+answer: 0, since, 1
+answer: 0, for, 0
+question: We've been studying English <span class="blank"></span> three months.
+blank: 0
+answer: 0, since, 0
+answer: 0, for, 1
+question: He has been sleeping <span class="blank"></span> seven hours.
+blank: 0
+answer: 0, since, 0
+answer: 0, for, 1
+question: He has been working <span class="blank"></span> seven o'clock this morning.
+blank: 0
+answer: 0, since, 1
+answer: 0, for, 0
+question: They've been very bust <span class="blank"></span> the last week.
+blank: 0
+answer: 0, since, 0
+answer: 0, for, 1
+question: They've been living here <span class="blank"></span> last week.
+blank: 0
+answer: 0, since, 1
+answer: 0, for, 0
+question: I haven't worn this dress <span class="blank"></span> two years.
+blank: 0
+answer: 0, since, 0
+answer: 0, for, 1
+question: We have been climbing <span class="blank"></span> an hour and a half.
+blank: 0
+answer: 0, since, 0
+answer: 0, for, 1
+question: She has been teaching in that school <span class="blank"></span> 1938.
+blank: 0
+answer: 0, since, 1
+answer: 0, for, 0
+question: My friend has been ill <span class="blank"></span> a long time.
+blank: 0
+answer: 0, since, 0
+answer: 0, for, 1
+question: It has been raining <span class="blank"></span> yesterday morning.
+blank: 0
+answer: 0, since, 1
+answer: 0, for, 0
+question: I haven't done any work <span class="blank"></span> a month.
+blank: 0
+answer: 0, since, 0
+answer: 0, for, 1
+question: What have you been doing <span class="blank"></span> yesterday.
+blank: 0
+answer: 0, since, 1
+answer: 0, for, 0
+question: That church has been standing here <span class="blank"></span> centuries.
+blank: 0
+answer: 0, since, 0
+answer: 0, for, 1
+question: He hasn't been here <span class="blank"></span> three weeks.
+blank: 0
+answer: 0, since, 0
+answer: 0, for, 1
+question: She hasn't bought any new clothes <span class="blank"></span> the beginning of the year.
+blank: 0
+answer: 0, since, 1
+answer: 0, for, 0

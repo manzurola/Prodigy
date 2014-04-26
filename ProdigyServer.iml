@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="web" name="web">
+      <configuration>
+        <descriptors>
+          <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/web/WEB-INF/web.xml" />
+        </descriptors>
+        <webroots>
+          <root url="file://$MODULE_DIR$/web" relative="/" />
+        </webroots>
+        <sourceRoots />
+      </configuration>
+    </facet>
+    <facet type="hibernate" name="Hibernate">
+      <configuration>
+        <datasource-map>
+          <unit-entry name="a.xml" value="8f5b1fc4-8678-4742-aed0-2c37c5396168" />
+          <unit-entry name="hibernate.cfg.xml" />
+        </datasource-map>
+        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/hibernate.cfg.xml" />
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/com/manzurola/prodigy/test" isTestSource="true" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="RESTful Web Services-RESTful Web Services" level="application" />
+    <orderEntry type="library" name="jQuery-1.8.2" level="application" />
+    <orderEntry type="library" name="google-gson-2.2" level="application" />
+    <orderEntry type="library" name="Guava" level="application" />
+    <orderEntry type="library" name="Java EE 6-Java EE 6" level="application" />
+    <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="library" name="jquery.mobile-1.2.0" level="application" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$APPLICATION_HOME_DIR$/lib/junit.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$APPLICATION_HOME_DIR$/lib/annotations.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="commons-lang3-3.1-javadoc" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-5.1.23-bin" level="project" />
+    <orderEntry type="library" name="jackson-2.1.1" level="project" />
+    <orderEntry type="library" name="JPA 2.0-2.0" level="project" />
+    <orderEntry type="library" name="hibernate" level="project" />
+    <orderEntry type="module-library">
+      <library name="jersey">
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/../../../JavaLib/Jersey/jersey-archive-1.17/lib" />
+          <root url="file://$MODULE_DIR$/../../../JavaLib/Jersey/jersey-archive-1.17/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/../../../JavaLib/Jersey/jersey-archive-1.17/lib" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/../../../JavaLib/Jersey/jersey-archive-1.17/lib" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="hibernate-4.1.1" level="project" />
+    <orderEntry type="library" name="com.fasterxml.jackson.core:jackson-core:2.1.3" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$APPLICATION_HOME_DIR$/lib/junit-4.10.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="hibernate-4.2.2" level="project" />
+    <orderEntry type="library" name="Jersey" level="application" />
+    <orderEntry type="library" name="Apache-Commons" level="application" />
+    <orderEntry type="library" name="com.fasterxml.jackson.core:jackson-core:2.3.0" level="application" />
+    <orderEntry type="library" name="mysql-connector-java-5.1" level="application" />
+  </component>
+</module>
+
