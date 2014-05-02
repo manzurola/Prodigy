@@ -1315,7 +1315,7 @@ var blank = function (view, spec) {
     };
 
     that.isSolved = function () {
-        return __solved;
+        return _solved;
     };
 
     that.getIndex = function () {
