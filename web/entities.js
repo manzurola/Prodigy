@@ -1235,8 +1235,8 @@ var blank = function (view, spec) {
      *
      */
     that.submitAnswer = function (choice) {
-        if (__solved) {
-            return __solved;
+        if (_solved) {
+            return _solved;
         }
 
         // Get wordIndex
@@ -1256,7 +1256,7 @@ var blank = function (view, spec) {
 
         if (choice.isLast()) {
             if (correct) {
-                __solved = true;
+                _solved = true;
                 _onCorrectSubmission();
             }
             else {
@@ -1571,8 +1571,8 @@ var constructorBlank = function (view, spec) {
      *
      */
     that.submitAnswer = function (choice) {
-        if (__solved) {
-            return __solved;
+        if (_solved) {
+            return _solved;
         }
 
         // Get wordIndex
@@ -1592,7 +1592,7 @@ var constructorBlank = function (view, spec) {
 
         if (choice.isLast()) {
             if (correct) {
-                __solved = true;
+                _solved = true;
                 _onCorrectSubmission();
             }
             else {
@@ -1602,7 +1602,7 @@ var constructorBlank = function (view, spec) {
 
         _updateChoices(_choiceCol);
 
-        return __solved;
+        return _solved;
     };
 
     that.getSubmittedAnswer = function () {
@@ -1651,7 +1651,7 @@ var constructorBlank = function (view, spec) {
     };
 
     that.isSolved = function () {
-        return __solved;
+        return _solved;
     };
 
     that.getIndex = function () {
