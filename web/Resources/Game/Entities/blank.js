@@ -5,75 +5,31 @@
  */
 
 function Blank(visual, spec) {
-    Entity.call(this, visual, spec);
+    Entity.call(this, visual);
 
-    this.__solution = {
-        isCorrect: false,
-            score:     100,
-        answers:   []
-    };
-    this.__solved = false;
-    this.__focused = false;
-    this.__starLost = false;
-    this.__star = null;
-    this.__points = null;
-    this.__choiceMatrix = [];
-    this.__index = spec['index'];
-    this.__multiChoicer = null;
-    this.__tokenChoiceMap = [];
-    this.__solLength = 0;
-    var that = entity(visual, spec),
-        solution = {
-            isCorrect: false,
-            score:     100,
-            answers:   []
-        },
-        baseRemove = that.remove;
+    this.index = spec.index;
+    this.class = this.__styleClasses.NORMAL;
+    /*  create points view element with default amount of 100  */
+    this.score = new Entity('span');
+    this.score.text = '100';
+    this.score.class = this.__styleClasses.CHILD_POINTS;
+    this.append(this.score);
+    /*  create star entity and append to view */
+    this.star = new Entity('span');
+    this.star.class = this.__styleClasses.STAR;
+    this.star.on('select', this.__handleInnerEntitySelectEvent);
+    this.append(this.star);
 
-    var _parentQuestion = spec['parentQuestion'],
-        _choiceMatrix = [],
-        index = spec['index'],
-        multiChoicer = null,
-        _tokenChoiceMap = [],
-        _choiceCol;
-
-    /**
-     * Init
-     */
-    (function init() {
-
-        this.visual.class = this.__styleClasses.NORMAL;
-
-        /*  create points view element with default amount of 100  */
-        this.points = this.__makeScore(100);
-
-        /*  create star entity and append to view */
-        this.star = this.visual.append(this.__makeStar());
-
-        //  for each answer in blank
-        for (var i = 0; i < spec['answers'].length; i++) {
-            //  note that answers should carry the number of blank they belong to
-
-            //  prepare data object associated with answer and create DOM element
-            var data = {
-                index:      i,
-                blankIndex: this.index,
-                token:      spec['answers'][i]['token'],
-                isCorrect:  spec['answers'][i]['correct'],
-                feedback:   spec['answers'][i]['feedback'],
-                blank:      this
-            };
-            this.__choiceMatrix.push(this.__makeChoices(data));
-        }
-        this.__tokenChoiceMap = this.__createTokenChoiceMap(_choiceMatrix);
-        this.__solLength = 0;
-        this.__updateChoices(_choiceCol);
-    })();
+    this.__choiceMatrix = this.__createChoiceMatrix(spec['answers']);
+    this.__tokenChoiceMap = this.__createTokenChoiceMap(this.__choiceMatrix);
+    this.__updateChoices(this.answer.children.length);
+    this.answer = new Entity('span');
+    this.append(this.answer);
 }
 
 Blank.prototype = Object.create(Entity.prototype);
 Blank.prototype.constructor = Blank;
-Blank.prototype.define('__visualClasses', {
+Blank.prototype.define('__styleClasses', {
     writable: false,
     value: {
         NORMAL:       'blank',
@@ -86,26 +42,30 @@ Blank.prototype.define('__visualClasses', {
         CHILD_POINTS: 'points'
     }
 });
-Blank.prototype.define('__ePoints', null);
-Blank.prototype.define('__eStar', null);
-Blank.prototype.define('isFocused', {
-    value: false,
-    set: function(focus) {
-        if (focus && !this.isFocused) {
-            this.visual.decorate(this.__styleClasses.FOCUSED);
-            this.focused = true;
-        } else if (!focus && this.isFocused) {
-            this.visual.strip(this.__styleClasses.FOCUSED);
-            this.focused = false;
-        }
+Blank.prototype.__createChoiceMatrix = function(ansArr) {
+    //  for each answer in blank
+    for (var i = 0; i < ansArr.length; i++) {
+        //  note that answers should carry the number of blank they belong to
+
+        //  prepare data object associated with answer and create DOM element
+        var data = {
+            index:      i,
+            blankIndex: this.index,
+            token:      ansArr[i]['token'],
+            isCorrect:  ansArr[i]['correct'],
+            feedback:   ansArr[i]['feedback'],
+            blank:      this
+        };
+        this.__choiceMatrix.push(this.__makeChoices(data));
     }
-});
+};
+Blank.prototype.define('isFocused', false);
 Blank.prototype.define('isSolved', false);
 Blank.prototype.define('isStarLost', false);
 Blank.prototype.define('star', null);
 Blank.prototype.define('points', null);
+Blank.prototype.define('answer', null);
 Blank.prototype.define('index', -1);
-Blank.prototype.define('solution', []);
 /**
  * Puts the supplied token in the blank, and toggles the state of the blank based on an answer matching the token.
  * If the supplied token matches a CORRECT answer to this blank
@@ -132,9 +92,7 @@ Blank.prototype.submitAnswer = function (choice) {
     if (correct) {
         // If answer is the missing piece we expect,
         // append it to the solution.
-        choice.hide()
-            .appendTo(this);
-        this.solution.push(choice);
+        this.answer.push(choice);
 
         this.__solLength++;
     }
@@ -153,9 +111,22 @@ Blank.prototype.submitAnswer = function (choice) {
 
     return correct;
 };
+Blank.prototype.
+Blank.prototype.focus = function() {
+        if (!this.isFocused) {
+            this.addClass(this.__styleClasses.FOCUSED);
+        }
+    this.isFocused = true;
+};
+Blank.prototype.unfocus = function() {
+     if (this.isFocused) {
+        this.removeClass(this.__styleClasses.FOCUSED);
+    }
+    this.isFocused = false;
+};
 Blank.prototype.removeInnerEntitiesAfterSolved = function () {
     this.star.remove();
-    this.points.remove();
+    this.score.remove();
     return this;
 };
 
@@ -169,17 +140,6 @@ Blank.prototype.getAnswers = function () {
     }
     return choices;
 };
-
-Blank.prototype.getPoints = function () {
-    return points.value;
-};
-
-Blank.prototype.setPoints = function (amount) {
-    points.getData()['value'] = amount;
-    points.setInnerText(amount);
-    return this;
-};
-
 Blank.prototype.__createTokenChoiceMap = function(choiceMatrix) {
     var tokenChoiceMap = {};
     for (var i=0 ;i <choiceMatrix.length; i++) {
@@ -219,27 +179,24 @@ Blank.prototype.__onCorrectSubmission = function() {
     this.__toNormalState();
 
     //  if the star was lost upon a false submission - do not show it again
-    if (starLost) {
-        star.hide();
-    } else {
+    if (this.isStarLost) {
+        this.star.hide();
     }
 
     //  the star is collected but is still drawn on screen.
     //  disable any select events.
-    star.disableSelectEvents();
+    this.star.disableSelectEvents();
 
-    this.visual.addClass(this.__visualClasses.CORRECT);
-    solution.map(function(choice) {
-        choice.show();
-    });
-    points.appendTo(that);
+    this.addClass(this.__visualClasses.CORRECT);
+    this.answer.show();
+    this.append(points);
 };
 
 Blank.prototype.__onFalseSubmission = function()  {
     this.__toNormalState();
 
-    visual.classList.add(this.__visualClasses.MISTAKE);
-    solution.show();
+    this.addClass(this.__styleClasses.MISTAKE);
+    this.answer.show();
 
     //  once a star is lost it is still drawn on screen. disable select events of that star
     if (!this.starLost) {
@@ -269,8 +226,8 @@ Blank.prototype.__makeChoices = function(spec) {
     logIt(words);
 
     for (var i = 0; i < words.length; i++) {
-        var view = document.createElement('span');
-        view.className = __css_classes.CHILD_ANSWER;
+        var elem = document.createElement('span');
+        elem.className = this.__styleClasses.CHILD_ANSWER;
         var data = {
             tokenIndex: i,
             index:      spec.index,
@@ -281,36 +238,12 @@ Blank.prototype.__makeChoices = function(spec) {
             blank:      this,
             isLast:     i === words.length - 1 ? true : false
         };
-        var ans = answer(view, data)
+        var ans = answer(elem, data)
             .on('select', this.__handleInnerEntitySelectEvent);
         answers.push(ans);
     }
 
     return answers;
-};
-
-Blank.prototype.__makeScore = function(amount) {
-    var ntt = new Visual('span');
-    ntt.text = amount;
-    ntt.class = this.__visualClasses.CHILD_POINTS;
-    return ntt;
-};
-
-Blank.prototype.__makeStar = function() {
-    var visual = new Visual('span');
-    visual.class = this.__styleClasses.STAR;
-    visual.on('select', this.__handleInnerEntitySelectEvent);
-    return visual;
-};
-Blank.prototype.__showChoices = function() {
-    for (var i=0; i<this.choices.length; i++) {
-        this.choices[i].visual.show();
-    }
-};
-Blank.prototype.__hideChoices = function() {
-    this.choices.map(function(choice) {
-        choice.visual.hide()
-    });
 };
 
 /**

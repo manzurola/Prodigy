@@ -915,19 +915,12 @@
 }
 
 .mistake > .star {
-    /*opacity: 0;*/
+    opacity: 0;
 
-    /*-webkit-transform: scale(0);*/
-    /*transform: scale(0);*/
-    /*-webkit-transition: all 1s ease;*/
-    /*transition: all 1s ease;*/
-
-    -webkit-animation-name: shakeUpDown, textShadow;
-    -webkit-animation-duration: 170ms, 170ms;
-    -webkit-animation-direction: normal, normal;
-    -webkit-animation-play-state: running, running;
-    -webkit-animation-iteration-count: infinite, 1;
-    -webkit-animation-timing-function: ease-out, ease;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+    -webkit-transition: all 1s ease;
+    transition: all 1s ease;
 }
 
 /*  style an answer inside the blank */
@@ -1282,18 +1275,11 @@
 
     border-bottom-width: 0.1em;
 
-    /*-webkit-transform: scale(1.5,1.5);*/
-
     -webkit-animation-name: multichoiceCorrect;
     -webkit-animation-iteration-count: 1;
-    /*-webkit-animation-duration: 350ms;*/
-    /*-webkit-animation-direction: normal;*/
-    /*-webkit-animation-timing-function: ease-out *//*cubic-bezier(0, 0.5, 0.5, 1)*//*;*/
-
-    -webkit-animation-duration: 250ms;
-    -webkit-animation-iteration-count: 1;
-    -webkit-animation-timing-function: ease;
-
+    -webkit-animation-duration: 350ms;
+    -webkit-animation-direction: normal;
+    -webkit-animation-timing-function: ease-out /*cubic-bezier(0, 0.5, 0.5, 1)*/;
     /*-webkit-animation-timing-function: cubic-bezier(1,.21,.83,.67);*/
 
     -webkit-box-shadow: inset 0 0 0.5em rgba(0, 0, 0, 0.35),
@@ -1346,11 +1332,11 @@
     z-index: 99999;
     font-size: 1.2em;
 
-    /*-webkit-animation-name: blow-up;*/
-    /*-webkit-animation-iteration-count: 1;*/
-    /*-webkit-animation-duration: 200ms;*/
-    /*-webkit-animation-direction: normal;*/
-    /*-webkit-animation-timing-function: ease;*//*cubic-bezier(0, 0, 0, 1);*/
+    -webkit-animation-name: blow-up;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-duration: 450ms;
+    -webkit-animation-direction: normal;
+    -webkit-animation-timing-function: cubic-bezier(0, 0, 0, 1);
 }
 
 
@@ -1415,7 +1401,7 @@
 
 @-webkit-keyframes multichoiceCorrect {
     25% {
-        -webkit-transform:  translate3d(0,0,0) scale(1.3);
+        -webkit-transform:  translate3d(0,0em,0) scale(1.3);
     }
     100% {
         -webkit-transform: translate3d(0,0,0) scale(1.1);

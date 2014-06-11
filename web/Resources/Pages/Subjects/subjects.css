@@ -1,0 +1,47 @@
+@charset "utf-8";
+
+#subjects {
+	text-align: center;
+
+    z-index: 10;
+}
+
+#subjects #subjectSelectionTitle{
+	font-size: 1.25em;
+    position: absolute;
+    display: inline-block;
+    top: 3em;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: auto;
+    -webkit-text-fill-color: black;
+
+}
+
+#subjects #subjectList{
+    position: absolute;
+    display: block;
+	list-style-type: none;
+    top: 6em;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+	width: 70%;
+}
+
+#subjects #subjectList > * {
+
+    border: 0.025em ridge black;
+    background: white;
+
+
+}
+
+#subjects #subjectList > *:hover {
+    -webkit-text-stroke-color: white;
+    -webkit-text-fill-color: white;
+
+    background: #1a82f7;
+}
+

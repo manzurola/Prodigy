@@ -1,0 +1,11 @@
+v2
+subject: Present Simple
+difficultyLevel: Elementary
+title: Rewrite It
+question: <span class="blank">A dog</span><span class="blank">is an</span><span class="blank">animal</span>
+blank: 0
+answer: 0, Dogs, 1
+blank: 1
+answer: 1, are, 1
+blank: 2
+answer: 2, animals, 1

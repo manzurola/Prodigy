@@ -1,65 +1,43 @@
 /**
  * User: guyman
- * Date: 12/15/13
- * Time: 7:31 PM
+ * Date: 4/30/14
+ * Time: 11:24 PM
  */
 function Entity(elem) {
-    var element;
-    if (elem) {
+    if (arguments.length > 0) {
         if (typeof elem === ' string') {
-            element = document.createElement(elem);
-        } else if (elem instanceof Element) {
-            element = elem;
+            this.element = document.createElement(elem);
         } else {
-            throw 'unknown param elem';
+            this.element = elem;
         }
-
-        for (var i=0; i<element.children.length; i++) {
-            this.children.push(new Entity(element.children[i]));
-        }
-
-        this.__parent = element.parentNode;
-        element.on('click', this.fire, 'select');
     }
-
-    DEFINE_PROP(this.prototype, '__element', {
-        value: element
-    });
+    this.element.on('click', this.fire, 'select');
 }
-
-DEFINE_PROP(Entity.prototype, '__registry', {
-    value: {}
+DEFINE_PROP(Entity.prototype, '__define', {
+    writable: false,
+    value:    function (prop, desc) {
+        var defaults = {
+                writable: false
+            },
+            settings = extend(defaults, desc);
+        DEFINE_PROP(this, prop, desc);
+        return this;
+    }
 });
-DEFINE_PROP(Entity.prototype, '__element', {
-    configurable: true,
+Entity.prototype.registry = {};
+Entity.prototype.elem = {};
+Entity.prototype.style = {};
+Entity.prototype.class =
+Entity.prototype.define('__element', {
     value: null
 });
-DEFINE_PROP(Entity.prototype, 'style', {
-    value: function(key, val) {
-        if (ASSERT_PROP(arguments, 0, 'string')) {
-            if (ASSERT_PROP(arguments, 1)) {
-                this.element.style[key] = value;
-                return this;
-            }
-            return this.element.style[key];
-        }
-        throw 'invalid num of args, expected 2';
-    }
-});
-DEFINE_PROP(Entity.prototype.style, 'getStyle', {
-    value: function (key) {
-        return this.element.style[key];
-    }
-});
-DEFINE_PROP(Entity.prototype.style, 'set', {
-    value: function key(key, value) {
-        this.element.style[key] = value;
-    }
-});
-DEFINE_PROP(Entity.prototype, 'data', {
+Entity.prototype.define('__style', {
     value: {}
 });
-DEFINE_PROP(Entity.prototype, 'class', {
+Entity.prototype.define('__data', {
+    value: {}
+});
+Entity.prototype.define('__class', {
     get:      function () {
         return this.element.className;
     },
@@ -68,25 +46,14 @@ DEFINE_PROP(Entity.prototype, 'class', {
     },
     writable: true
 });
-DEFINE_PROP(Entity.prototype, '__parent', {
-    writable: true,
-    value: null
-});
-DEFINE_PROP(Entity.prototype, 'parent', {
-    writable: true,
-    get: function() {
-        return this.__parent;
-    }
-});
-DEFINE_PROP(Entity.prototype, '__children', {
+Entity.prototype.define('__children', {
     enumerable: true,
     value:      [],
     get:        function () {
         return this.element.children;
     }
 });
-DEFINE_PROP(Entity.prototype, 'children', {});
-DEFINE_PROP(Entity.prototype.children, '__parent', {
+Entity.prototype.define('__parent', {
     writable: true,
     get:      function () {
         return this.element.parentNode;
@@ -95,7 +62,7 @@ DEFINE_PROP(Entity.prototype.children, '__parent', {
         this.element.parentNode = val;
     }
 });
-DEFINE_PROP(Entity.prototype, '__text', {
+Entity.prototype.define('__text', {
     get: function () {
         return this.element.innerText;
     },
@@ -103,7 +70,7 @@ DEFINE_PROP(Entity.prototype, '__text', {
         this.element.innerText = val;
     }
 });
-DEFINE_PROP(Entity.prototype, '__html', {
+Entity.prototype.define('__html', {
     get: function () {
         return this.element.innerHTML;
     },
@@ -111,34 +78,27 @@ DEFINE_PROP(Entity.prototype, '__html', {
         this.element.innerHTML = val;
     }
 });
-DEFINE_PROP(Entity.prototype, 'addClass', {
+Entity.prototype.define('__addClass', {
     value: function (classes) {
         this.element.classList.add(classes);
         return this;
     }
 });
-DEFINE_PROP(Entity.prototype, 'removeClass', {
+Entity.prototype.define('__removeClass', {
     value: function (classes) {
         this.element.classList.remove(classes);
         return this;
     }
 });
-
-DEFINE_PROP(Entity.prototype, 'append', {
-    value: function (child) {
-        this.element.appendChild(child.element);
-        child.parent = this;
-        this.children.push(child);
-        return this;
+Entity.prototype.define('__style', {
+    value: function () {
+        if (arguments.length > 1)
+            this.element.style[prop] = value;
     }
 });
-DEFINE_PROP(Entity.prototype, 'appendTo', {
-    value: function (parent) {
-        parent.append(this);
-        this.parent = parent;
-        return this;
-    }
-});
+Entity.prototype.getStyle = function (prop) {
+    return this.element.style[prop];
+};
 Entity.prototype.append = function (child) {
     this.element.appendChild(child.element);
     child.parent = this;
@@ -176,7 +136,7 @@ Entity.prototype.empty = function () {
     }
     return this;
 };
-DEFINE_PROP(Entity.prototype, 'fire', {
+Entity.prototype.define('fire', {
     writable: false,
     value:    function fire(event) {
         // Fire an event on an object. The event can be either
@@ -210,7 +170,7 @@ DEFINE_PROP(Entity.prototype, 'fire', {
         return this;
     }
 });
-DEFINE_PROP(Entity.prototype, 'on', {
+Entity.prototype.define('on', {
     writable:     false,
     configurable: true,
     value:        function (type, method, parameters) {
@@ -233,5 +193,4 @@ DEFINE_PROP(Entity.prototype, 'on', {
     }
 });
 
-DEFINE_PROP = Entity.prototype.__define;
 

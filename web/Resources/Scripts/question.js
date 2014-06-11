@@ -7,7 +7,7 @@
 function Answer() {
     this.confidence = 0;
     this.speed = 0;
-    this.points = 0;
+    this.score = 0;
     this.penalty = 0;
 }
 

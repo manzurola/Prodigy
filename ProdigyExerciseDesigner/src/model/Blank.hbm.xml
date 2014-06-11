@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="model.Blank" table="blanks" schema="" catalog="prodigy_schema">
+        <composite-id mapped="true" class="model.BlankPK">
+            <key-property name="index">
+                <column name="idx" sql-type="int" length="10" not-null="true"/>
+            </key-property>
+            <key-property name="questionId">
+                <column name="question_id" sql-type="int" length="10" not-null="true"/>
+            </key-property>
+        </composite-id>
+        <many-to-one name="questionsByQuestionId" class="model.Question" insert="false" update="false">
+            <column name="question_id" not-null="true"/>
+        </many-to-one>
+        <set name="answers" inverse="true">
+            <key>
+                <column name="idx" not-null="true"/>
+                <column name="question_id" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.Answer"/>
+        </set>
+    </class>
+</hibernate-mapping>

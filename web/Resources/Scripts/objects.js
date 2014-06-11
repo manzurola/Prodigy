@@ -207,13 +207,13 @@ Health.prototype.update = function (player, challenge) {
 };
 Health.prototype.hurt = function (amount) {
     this.decorate('hurt');
-    this.points(this.__healthbar.progress() - amount);
+    this.score(this.__healthbar.progress() - amount);
 };
 Health.prototype.heal = function (amount) {
     this.decorate('heal');
-    this.points(this.__healthbar.progress() + amount);
+    this.score(this.__healthbar.progress() + amount);
 };
-Health.prototype.points = function(value) {
+Health.prototype.score = function(value) {
     if (Utils.assertArg(arguments, 1, value, 'number')) {
         this.__healthbar.progress(value);
         return this;
@@ -258,7 +258,7 @@ function Score(elem, spec) {
         .decorate('points');
     this.__multiplierVisual = new Visual(document.createElement('div'), {})
         .decorate('points');
-    this.points = 0;
+    this.score = 0;
     this.multiplier = 0;
 }
 Score.prototype = Object.create(Visual.prototype);

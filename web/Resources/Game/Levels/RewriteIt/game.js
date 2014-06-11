@@ -1,308 +1,27 @@
-var Game = function(data){
+var Game = function (spec) {
 
-};
-
-Game.prototype.events = {
-    CORRECT_ANSWER: 'correct_answer',
-    WRONG_ANSWER:   'wrong_answer',
-    QUESTION_COMPLETED:
-
-};
-
-Game.prototype.pause = function() {
-
-};
-
-Game.prototype.resume = function (){
-
-};
-
-Game.prototype.start = function() {
-
-};
-
-Game.prototype.quit = function() {
-
-};
-
-Game.prototype.handle = function(event) {
-
-};
-
-
-
-/**
- * COMBO CHAIN
- *
- * controls blank chaining.
- *
- * Supported operations:
- *
- * start - resets timer with a default amount of millis.
- *
- * stop - stops and resets timer but retains data (blanks, callback). does not invoke callback
- *
- * clearData - removes callback and blanks
- *
- * forceStop - stops timer and invokes callback
- *
- * chain - adds a blank to the chain. may be invoked while timer is running.
- * in this case an amount of 100 / |blanks| milli seconds is added to the timer (num of blanks is calculated after adding a new one).
- */
-var COMBO_CHAIN = (function () {
-    var CHAINING_INTERVAL_TIME = 3000;
-    var _blanks = [];
-    var _isRunning = false;
-    var _startTime;
-    var _endTime;
-    var _timer;
-    var _callback;
-
-    var startTimer = function (callback, millis) {
-        _isRunning = true;
-        _startTime = +new Date();
-        _timer = setTimeout(function () {
-            _isRunning = false;
-            _endTime = +new Date();
-            callback();
-        }, millis);
+    var data  = {
+        title: null,
+        questions: []
     };
 
-    var chain = function (blank) {
+    Utils.extend(data, spec);
 
-        //  assign chain attribute to blank
-        blank.dataset.chained = true;
-
-        _blanks.push(blank);
-
-        if (_isRunning) {
-            //  calculate the amount of time to add to timer
-            var elapsed = getElapsedTime();
-
-            clearTimeout(_timer);
-
-            //  sum the weight of added blank and the remainder of a the default interval
-            var time = (100 / _blanks.length) + (CHAINING_INTERVAL_TIME - elapsed);
-
-            startTimer(_callback, time);
-        }
-    }
-
-    /**
-     * restarts timer
-     */
-    var start = function () {
-        startTimer(_callback, CHAINING_INTERVAL_TIME);
-    }
-
-    var stop = function () {
-        //  clear previously started timer
-        clearTimeout(_timer);
-
-        _isRunning = false;
-    }
-
-    var freeze = function () {
-        //  TODO: implement method
-    }
-
-    var clearData = function () {
-        //  clear array of blanks
-        _blanks.length = 0;
-
-        _callback = null;
-    }
-
-    var forceStop = function () {
-        stop();
-        _callback();
-    }
-
-    var getElapsedTime = function () {
-        return +new Date() - _startTime;
-    }
-
-    return {
-        /**
-         * starts timer and invokes callback on timer end, unless clear is invoked before time elapsed
-         * @param callback
-         * @return {*}
-         */
-        start    : function (callback) {
-            _callback = callback;
-            start();
-            return this;
-        },
-        /**
-         * adds a blank to the chain. if the chain is empty, a new timer is started,
-         * else a specific delta amount of time is added to the timer
-         * @param blank
-         */
-        chain    : function (blank) {
-            chain(blank);
-            return this;
-        },
-        /**
-         * removes any blanks in chain and stops timer
-         */
-        clearData: function () {
-            clearData();
-            return this;
-        },
-        /**
-         * pauses timer
-         */
-        freeze   : function () {
-
-        },
-        /**
-         * forces the chain to stop and invokes callback as if timer was done
-         */
-        forceStop: function () {
-            forceStop();
-            return this;
-        },
-        getBlanks: function () {
-            return _blanks;
-        },
-        isRunning: function () {
-            return _isRunning;
-        }
-    }
-})();
-
-
-var game = function (view, data) {
-
-    var CSS_CLASS_NAMES = {
-        PAUSE_BUTTON: 'pause-button'
+    this.data = {
+        title: "",
+        questions: [],
+        score: 0,
+        progress: 0,
+        health: 10
     };
 
-    var that = entity(view, data);
-
-    var CHOICE_VIEW_FORMATS = {
-        BY_BLANK   : 0,
-        BY_QUESTION: 1,
-        BY_EXERCISE: 2
-    };
-
-    var _score,
-        _health = null,
-        _autoMoveTimer = null,
-        _autoMoveTimeout = 600,
-        _combo = null,
-        _starCounter = null,
-        _clock = null,
-        _feedback = null,
-        _exercise = null,
-        _blanksLeftInQuestion,
-        _blanksLeftInGame,
-        _selectedQuestion,
-        _selectedBlank,
-        _isPaused = false,
-        _rawJsonExercise,
-        _gameOverStats = {
-            score        : 0,
-            accuracyBonus: 0,
-            timeBonus    : 0,
-            totalScore   : 0
-        };
-
-    /**
-     * Initializes game objects with supplied exercise data
-     * @param exerciseJson a JSON object containing exercise data
-     * @return {*}
-     */
-    that.initExercise = function (exerciseJson) {
-        _init(exerciseJson);
-        return this;
-    };
-
-    /**
-     * @return {{score: number, accuracyBonus: number, timeBonus: number, totalScore: number}}
-     */
-    that.getGameStats = function () {
-        return _gameOverStats;
-    };
-
-    /**
-     * Gets the number of stars collected in current game
-     * return {int}
-     */
-    that.getStarsCollected = function () {
-        return _starCounter.getCount();
-    };
-
-    /**
-     * Returns the maximum number of stars that could be collected in the current game.
-     * @return {int}
-     */
-    that.getTotalStarsToCollect = function () {
-        return _starCounter.getTotal();
-    };
-
-    /**
-     * Gets the calculated grade from 0-100 based on the player's performance in current completed game
-     * @return {int}
-     */
-    that.getGrade = function () {
-        var totalStarsToCollect = _starCounter.getTotal();
-        var starsCollected = _starCounter.getCount();
-        return parseInt((starsCollected / totalStarsToCollect) * 100);
-    };
-
-    /**
-     * Gets the amount of points received in current game
-     * @return {int}
-     */
-    that.getScore = function () {
-        return _score.getPoints();
-    };
-
-    /**
-     * Starts the game - selects the first question in game.
-     * @return {this}
-     */
-    that.start = function () {
-        _start();
-        return this;
-    };
-
-    /**
-     * Pauses the current game - relevant only if a timer is ticking
-     * @return {this}
-     */
-    that.pause = function () {
-        _pause();
-        return this;
-    };
-
-    /**
-     * Resumes the game from a paused state
-     * @return {this}
-     */
-    that.resume = function () {
-        _resume();
-        return this;
-    };
-
-    /**
-     * Clears current game and starts a new one with same exercise
-     * @return {this}
-     */
-    that.restart = function () {
-        _restart();
-        return this;
-    };
-
-    /**
-     * Quits from game - clears screen and stats
-     * @return {this}
-     */
-    that.quit = function () {
-        //  TODO: nullify entities, stop clock etc.
-        _clearScreen();
-        return this;
+    this.dom = {
+        screen: null,
+        question: null,
+        choices: null,
+        score: 0,
+        progress: null,
+        health: null
     };
 
     /****************************************   private methods *************************************/
@@ -786,30 +505,125 @@ var game = function (view, data) {
         return pauseButton;
     }
 
-    return that;
+    function load(data) {
 
-};     //  end game class
+        var questions = data['questions'];
 
-var SOUND_MANAGER = (function () {
+        //  create questions but do not append to exercise
+        var prev = null, current = null, next = null;
+        for (var i = 0; i < questions.length; i++) {
 
-    var _sounds = {
+            var questionData = {
+                'index':   i,
+                'html':    questions[i]['html'],
+                'blanks':  questions[i]['blanks'],
+                'isFirst': !!(i === 0),
+                'isLast':  !!(i === questions.length - 1)
+            };
 
+            //  set the prev question to give to the new question as the current question of prev iteration
+            prev = current;
+
+            //  the default next question is null
+            next = null;
+            current = _makeQuestion(questionData);
+            questions.push(current);
+
+            current.setPrevQuestion(prev);      //  prev question of current one
+            current.setNextQuestion(next);
+
+            //  the current question of last iteration now receives a next question
+            // (which is this iteration's current one)
+            if (prev) {
+                prev.setNextQuestion(current);      //  next question of previous one
+            }
+
+            _setMultiChoiceManagersToBlanksInQuestion(current);
+        }
+
+        title = _makeTitle(spec['title']).appendTo(that);
+        subject = _makeSubject(spec['subjectName']).appendTo(that);
+        exerciseProgression = _makeProgressBar().appendTo(that);
     }
 
     return {
-
-        SOUNDS: _sounds,
-
-        play: function (sound, delay) {
-            switch (sound) {
-                /*  switch on sound code    */
-            }
-        }
+        init: init,
+        start: start,
+        pause: pause,
+        resume: resume,
+        quit:_quit
     }
-})();
 
-//$(document).ready(function () {
-//    logIt('game init pre');
-//    GAME.init();
-//    logIt('game init post');
-//})
+};     //  end game class
+
+Game.prototype.onAnswer = function(event) {
+
+};
+
+Game.prototype.onCorrect = function(event) {
+
+};
+
+Game.prototype.onMistake = function(event) {
+
+};
+
+Game.prototype.fillBlank = function(answer) {
+
+};
+
+Game.prototype.scoreUp = function(event) {
+
+};
+
+Game.prototype.looseHealth = function() {
+
+};
+
+Game.prototype.earnHealth = function() {
+
+};
+
+Game.Event = function() {
+    this.id = 0;
+    this.time = Date.now();
+    this.choice = {};
+};
+
+Game.Answer = function() {
+    this.index = 0;
+    this.questionId = 0;
+    this.token = false;
+    this.isCorrect =false;
+    this.feedback = null;
+};
+
+Game.Question = function() {
+    this.id = 0;
+    this.exerciseId = 0;
+    this.html = "";
+    this.index = 0;
+    this.answers = [];
+};
+
+window.onload = function(e) {
+//    var c = multiChoice(document.createElement('div'), {});
+//    var cc = multiChoiceManager(document.createElement('div'),{});
+//    var ccc = combo(document.createElement('div'),{});
+//    var health = health(document.createElement('div'),{});
+//    var st = starCounter(document.createElement('div'),{});
+//    var s = score(document.createElement('div'),{});
+//    var exercise = exercise(document.createElement('div'),{});
+
+    var remote = new Remote();
+    remote.get('http://localhost:8080/rest/exercises/4', function(data) {
+        logIt('here');
+        var json = JSON.parse(data.target.responseText)['exercise'];
+        var elem =   document.getElementById('rewriteIt');
+        logIt(elem);
+        level = game(document.getElementById('game'), {})
+            .initExercise(json)
+            .start();
+    }, false);
+};
+

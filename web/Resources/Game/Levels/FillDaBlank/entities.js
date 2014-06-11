@@ -1402,10 +1402,7 @@ var blank = function (view, spec) {
         _toNormalState();
 
         view.classList.add(CSS_CLASS_NAMES.MISTAKE);
-        for (var i=0; i<_solution.length; i++) {
-            _solution[i].show();
-        }
-
+        _solution.show();
 
         //  once a star is lost it is still drawn on screen. disable select events of that star
         if (!_starLost) {

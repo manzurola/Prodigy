@@ -1,176 +1,43 @@
-var Game = function(data){
+var level;
 
+function GameData() {
+    this.questions = [];
+}
+GameData.prototype.question = function(index) {
+    return this.questions[index];
 };
 
-Game.prototype.events = {
-    CORRECT_ANSWER: 'correct_answer',
-    WRONG_ANSWER:   'wrong_answer',
-    QUESTION_COMPLETED:
+function Game(data) {
+
+}
+Game.prototype.state = {
+    score: 0,
+    question: null
+};
+Game.prototype.onChoice = function(choice) {
 
 };
-
-Game.prototype.pause = function() {
-
-};
-
-Game.prototype.resume = function (){
-
-};
-
 Game.prototype.start = function() {
 
 };
+Game.prototype.pause = function() {
 
+};
+Game.prototype.resume = function() {
+
+};
+Game.prototype.restart = function() {
+
+};
 Game.prototype.quit = function() {
 
 };
 
-Game.prototype.handle = function(event) {
+function FillDaBlank() {
 
-};
-
-
-
-/**
- * COMBO CHAIN
- *
- * controls blank chaining.
- *
- * Supported operations:
- *
- * start - resets timer with a default amount of millis.
- *
- * stop - stops and resets timer but retains data (blanks, callback). does not invoke callback
- *
- * clearData - removes callback and blanks
- *
- * forceStop - stops timer and invokes callback
- *
- * chain - adds a blank to the chain. may be invoked while timer is running.
- * in this case an amount of 100 / |blanks| milli seconds is added to the timer (num of blanks is calculated after adding a new one).
- */
-var COMBO_CHAIN = (function () {
-    var CHAINING_INTERVAL_TIME = 3000;
-    var _blanks = [];
-    var _isRunning = false;
-    var _startTime;
-    var _endTime;
-    var _timer;
-    var _callback;
-
-    var startTimer = function (callback, millis) {
-        _isRunning = true;
-        _startTime = +new Date();
-        _timer = setTimeout(function () {
-            _isRunning = false;
-            _endTime = +new Date();
-            callback();
-        }, millis);
-    };
-
-    var chain = function (blank) {
-
-        //  assign chain attribute to blank
-        blank.dataset.chained = true;
-
-        _blanks.push(blank);
-
-        if (_isRunning) {
-            //  calculate the amount of time to add to timer
-            var elapsed = getElapsedTime();
-
-            clearTimeout(_timer);
-
-            //  sum the weight of added blank and the remainder of a the default interval
-            var time = (100 / _blanks.length) + (CHAINING_INTERVAL_TIME - elapsed);
-
-            startTimer(_callback, time);
-        }
-    }
-
-    /**
-     * restarts timer
-     */
-    var start = function () {
-        startTimer(_callback, CHAINING_INTERVAL_TIME);
-    }
-
-    var stop = function () {
-        //  clear previously started timer
-        clearTimeout(_timer);
-
-        _isRunning = false;
-    }
-
-    var freeze = function () {
-        //  TODO: implement method
-    }
-
-    var clearData = function () {
-        //  clear array of blanks
-        _blanks.length = 0;
-
-        _callback = null;
-    }
-
-    var forceStop = function () {
-        stop();
-        _callback();
-    }
-
-    var getElapsedTime = function () {
-        return +new Date() - _startTime;
-    }
-
-    return {
-        /**
-         * starts timer and invokes callback on timer end, unless clear is invoked before time elapsed
-         * @param callback
-         * @return {*}
-         */
-        start    : function (callback) {
-            _callback = callback;
-            start();
-            return this;
-        },
-        /**
-         * adds a blank to the chain. if the chain is empty, a new timer is started,
-         * else a specific delta amount of time is added to the timer
-         * @param blank
-         */
-        chain    : function (blank) {
-            chain(blank);
-            return this;
-        },
-        /**
-         * removes any blanks in chain and stops timer
-         */
-        clearData: function () {
-            clearData();
-            return this;
-        },
-        /**
-         * pauses timer
-         */
-        freeze   : function () {
-
-        },
-        /**
-         * forces the chain to stop and invokes callback as if timer was done
-         */
-        forceStop: function () {
-            forceStop();
-            return this;
-        },
-        getBlanks: function () {
-            return _blanks;
-        },
-        isRunning: function () {
-            return _isRunning;
-        }
-    }
-})();
-
+}
+FillDaBlank.prototype = Object.create(Game.prototype);
+FillDaBlank.prototype.constructor = FillDaBlank;
 
 var game = function (view, data) {
 
@@ -790,26 +657,24 @@ var game = function (view, data) {
 
 };     //  end game class
 
-var SOUND_MANAGER = (function () {
+window.onload = function(e) {
+//    var c = multiChoice(document.createElement('div'), {});
+//    var cc = multiChoiceManager(document.createElement('div'),{});
+//    var ccc = combo(document.createElement('div'),{});
+//    var health = health(document.createElement('div'),{});
+//    var st = starCounter(document.createElement('div'),{});
+//    var s = score(document.createElement('div'),{});
+//    var exercise = exercise(document.createElement('div'),{});
 
-    var _sounds = {
+    var remote = new Remote();
+    remote.get('http://localhost:8080/rest/exercises/3', function(data) {
+        logIt('here');
+        var json = JSON.parse(data.target.responseText)['exercise'];
+        var elem =   document.getElementById('fillDaBlank');
+        logIt(elem);
+        level = game(document.getElementById('game'), {})
+            .initExercise(json)
+            .start();
+    }, false);
+};
 
-    }
-
-    return {
-
-        SOUNDS: _sounds,
-
-        play: function (sound, delay) {
-            switch (sound) {
-                /*  switch on sound code    */
-            }
-        }
-    }
-})();
-
-//$(document).ready(function () {
-//    logIt('game init pre');
-//    GAME.init();
-//    logIt('game init post');
-//})

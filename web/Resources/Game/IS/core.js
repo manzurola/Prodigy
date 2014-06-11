@@ -3,32 +3,95 @@
  * Date: 3/28/14
  * Time: 5:31 PM
  */
-
-var Core = {
-    MixIns: {}
+Function.prototype.method = function (name, func) {
+    this.prototype[name] = func;
+    return this;
 };
 
-function EEvent(spec) {
-    this.target = typeof spec.target == 'object' ? spec.target : null;
-    this.registry = typeof spec.registry === 'string' ? spec.registry : null;
-    this.type = typeof spec.type === 'string' ? spec.type : null;
-    this.timestamp = Date.now();
-}
+Function.method('inherits', function (parent) {
+    this.prototype = new parent();
+    var d = {},
+        p = this.prototype;
+    this.prototype.constructor = parent;
+    this.method('uber', function uber(name) {
+        if (!(name in d)) {
+            d[name] = 0;
+        }
+        var f, r, t = d[name], v = parent.prototype;
+        if (t) {
+            while (t) {
+                v = v.constructor.prototype;
+                t -= 1;
+            }
+            f = v[name];
+        } else {
+            f = p[name];
+            if (f == this[name]) {
+                f = v[name];
+            }
+        }
+        d[name] += 1;
+        r = f.apply(this, Array.prototype.slice.apply(arguments, [1]));
+        d[name] -= 1;
+        return r;
+    });
+    return this;
+});
 
-EEvent.prototype = Object.create({});
-EEvent.prototype.constructor = EEvent;
-
-function defineProperty(obj, prop, desc) {
-    Object.defineProperty(obj, prop, desc);
-}
-
-function extend(destination, source) {
+function EXTEND(destination, source) {
     for (var k in source) {
         if (source.hasOwnProperty(k)) {
             destination[k] = source[k];
         }
     }
     return destination;
+}
+
+function INHERITS(child, parent) {
+    child.prototype = Object.create(parent);
+    child.prototype.constructor = parent;
+}
+
+function ASSERT_PROP(obj, prop, type) {
+    if (obj instanceof Array) {
+        if (obj.length <= prop) {
+            throw 'out of bounds: array length ' + obj.length + ', index ' + prop;
+        }
+        if (typeof obj[prop] !== type) {
+            return false;
+        }
+        return true;
+    }
+
+    return obj.hasOwnProperty(prop) && typeof obj[prop] === type;
+}
+
+function DEFINE_PROP(obj, prop, desc) {
+    var defaults = {
+            writable: true
+        },
+        settings = EXTEND(defaults, desc);
+
+
+    Object.defineProperty(obj, prop, settings);
+}
+
+function DEFINE_PROP_MAP(obj, prop, src) {
+    var defaults = {
+            writable: true
+        },
+        settings = EXTEND(defaults, desc);
+    DEFINE_PROP(obj, prop, {
+        value: function() {
+            if (arguments.length === 0) {
+                return src;
+            }
+
+            var value = arguments[0];
+            src = arguments
+        }
+    })
+    Object.defineProperty(obj, prop, settings);
 }
 
 Array.prototype.shuffle = function () {
