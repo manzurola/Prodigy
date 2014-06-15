@@ -53,4 +53,17 @@
               driverClassName="com.mysql.jdbc.Driver"
               url="jdbc:mysql://localhost:3306/prodigy?autoReconnect=true"/>
 
+    <Resource name="jdbc/prodigyJelastic"
+              auth="Container"
+              type="javax.sql.DataSource"
+              maxActive="100"
+              maxIdle="30"
+              maxWait="10000"
+              testOnBorrow = "true"
+              validationQuery = "select 1"
+              username="root"
+              password="gWheBe4itb"
+              driverClassName="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://mysql-env-prodigy.jelastic.dogado.eu/prodigy_schema"/>
+
 </Context>

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="ProdigyServer:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/ProdigyServer_war</output-path>
+    <root id="archive" name="Prodigy.war">
+      <element id="artifact" artifact-name="ProdigyServer:war exploded" />
+    </root>
+  </artifact>
+</component>

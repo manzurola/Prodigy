@@ -121,7 +121,8 @@ var multiChoice = function (view, spec) {
     function _handleMistakeAnimationEndEvent() {
         view.removeEventListener('webkitAnimationEnd', arguments.callee);
         that.fireEvent('mistakeAnimationEnd');
-        view.className = CSS_CLASS_NAMES.MISTAKE_STATIC;
+        _defaultMode();
+//        view.className = CSS_CLASS_NAMES.MISTAKE_STATIC;
     }
 
     function _defaultMode() {
@@ -142,7 +143,8 @@ var multiChoice = function (view, spec) {
     function _handleCorrectAnimationEndEvent() {
         view.removeEventListener('webkitAnimationEnd', arguments.callee);
         that.fireEvent('correctAnimationEnd');
-        view.className = CSS_CLASS_NAMES.CORRECT_STATIC;
+//        view.className = CSS_CLASS_NAMES.CORRECT_STATIC;
+        _defaultMode();
     }
 
     function _animateHidden() {
@@ -915,13 +917,13 @@ var exercise = function (view, spec) {
 var question = function (view, spec) {
 
     var CSS_CLASS_NAMES = {
-        SELF:   'question',
-        SOLVED: 'solved',
-        LAST:   'last',
-        FIRST:  'first',
-        BLANK:  'blank',
-        PREV:   'prev-question-button',
-        NEXT:   'next-question-button'
+        SELF:         'question',
+        SOLVED:       'solved',
+        LAST:         'last',
+        FIRST:        'first',
+        BLANK:        'blank',
+        PREV:         'prev-question-button',
+        NEXT:         'next-question-button'
     };
 
     var that = entity(view, spec),
@@ -950,15 +952,14 @@ var question = function (view, spec) {
             view.classList.add(CSS_CLASS_NAMES.LAST);
         }
 
-        var spanBlankClassNodeList = view.getElementsByClassName(CSS_CLASS_NAMES.BLANK);
-        for (var i = 0; i < spanBlankClassNodeList.length; i++) {
-
+        var blankElems = _extractBlankElems(view);
+        for (var i = 0; i < blankElems.length; i++) {
+            var blankView = blankElems[i];
             var blankData = {
                 'index':          i,
                 'answers':        spec['blanks'][i]['answers'],
                 'parentQuestion': that
             };
-            var blankView = spanBlankClassNodeList[i];
             blanks.push(blank(blankView, blankData));
         }
 
@@ -1103,6 +1104,28 @@ var question = function (view, spec) {
         return this;
     };
 
+    function _extractBlankElems(elem, dataArr) {
+//        var elemChildren = elem.childNodes;
+//        var elems = [];
+//        for (var i = 0; i < elemChildren.length; i++) {
+//            switch (elemChildren[i].className) {
+//                case CSS_CLASS_NAMES.BLANK:
+//                    elems.push(elemChildren[i]);
+//                    break;
+//                case CSS_CLASS_NAMES.BLANK_COMBO:
+//                    elems.push(elemChildren[i]);
+//                    break;
+//                case CSS_CLASS_NAMES.BLANK_BINARY:
+//                    elems.push(elemChildren[i]);
+//                    break;
+//            }
+//
+//        }
+
+        return elem.getElementsByClassName('blank');
+//        return elems;
+    }
+
     function _solve() {
         view.classList.add(CSS_CLASS_NAMES.SOLVED);
     }
@@ -1148,6 +1171,8 @@ var blank = function (view, spec) {
 
     var CSS_CLASS_NAMES = {
         NORMAL:       'blank',
+        COMBO:        'combo-blank',
+        BINARY:       'binary-blank',
         FOCUSED:      'focused',
         CORRECT:      'correct',
         MISTAKE:      'mistake',
@@ -1177,13 +1202,22 @@ var blank = function (view, spec) {
         _solution = [],
         _tokenChoiceMap = [],
         _choiceCol;
-
     /**
      * Init
      */
     (function init() {
+//        _type = spec.type;
+//        switch (_type) {
+//            case 'plain':
+//                break;
+//            case 'combo':
+//                break;
+//            case 'binary':
+//                break;
+//        }
 
         view.className = CSS_CLASS_NAMES.NORMAL;
+
 
         that.on('select', function () {
 
@@ -1345,8 +1379,8 @@ var blank = function (view, spec) {
 
     function _createTokenChoiceMap(choiceMatrix) {
         var tokenChoiceMap = {};
-        for (var i=0 ;i <choiceMatrix.length; i++) {
-            for (var j=0; j<choiceMatrix[i].length; j++) {
+        for (var i = 0; i < choiceMatrix.length; i++) {
+            for (var j = 0; j < choiceMatrix[i].length; j++) {
                 var token = choiceMatrix[i][j].getToken();
                 if (!tokenChoiceMap.hasOwnProperty(token)) {
                     tokenChoiceMap[token] = answer(document.createElement('div'), {
@@ -1365,7 +1399,7 @@ var blank = function (view, spec) {
             _tokenChoiceMap[prop].setIsLast(false);
         }
         // update only correct choices at choiceIndex
-        for (var i=0; i< _choiceMatrix.length; i++) {
+        for (var i = 0; i < _choiceMatrix.length; i++) {
             var choices = _choiceMatrix[i];
             if (choiceIndex < choices.length) {
                 if (choices[choiceIndex].isCorrect()) {
@@ -1392,7 +1426,7 @@ var blank = function (view, spec) {
         _star.disableSelectEvents();
 
         view.classList.add(CSS_CLASS_NAMES.CORRECT);
-        _solution.map(function(choice) {
+        _solution.map(function (choice) {
             choice.show();
         });
         _points.appendTo(that);
@@ -1402,10 +1436,9 @@ var blank = function (view, spec) {
         _toNormalState();
 
         view.classList.add(CSS_CLASS_NAMES.MISTAKE);
-        for (var i=0; i<_solution.length; i++) {
+        for (var i = 0; i < _solution.length; i++) {
             _solution[i].show();
         }
-
 
         //  once a star is lost it is still drawn on screen. disable select events of that star
         if (!_starLost) {
@@ -1684,8 +1717,8 @@ var constructorBlank = function (view, spec) {
 
     function _createTokenChoiceMap(choiceMatrix) {
         var tokenChoiceMap = {};
-        for (var i=0 ;i <choiceMatrix.length; i++) {
-            for (var j=0; j<choiceMatrix[i].length; j++) {
+        for (var i = 0; i < choiceMatrix.length; i++) {
+            for (var j = 0; j < choiceMatrix[i].length; j++) {
                 var token = choiceMatrix[i][j].getToken();
                 if (!tokenChoiceMap.hasOwnProperty(token)) {
                     tokenChoiceMap[token] = answer(document.createElement('div'), {
@@ -1704,7 +1737,7 @@ var constructorBlank = function (view, spec) {
             _tokenChoiceMap[prop].setIsLast(false);
         }
         // update only correct choices at choiceIndex
-        for (var i=0; i< _choiceMatrix.length; i++) {
+        for (var i = 0; i < _choiceMatrix.length; i++) {
             var choices = _choiceMatrix[i];
             if (choiceIndex < choices.length) {
                 if (choices[choiceIndex].isCorrect()) {
@@ -1731,7 +1764,7 @@ var constructorBlank = function (view, spec) {
         _star.disableSelectEvents();
 
         view.classList.add(CSS_CLASS_NAMES.CORRECT);
-        _solution.map(function(choice) {
+        _solution.map(function (choice) {
             choice.show();
         });
         _points.appendTo(that);
@@ -1862,7 +1895,7 @@ var answer = function (view, spec) {
     var that = entity(view, spec),
         baseRemove = that.remove;
 
-    var _token =  spec.hasOwnProperty('token') ? spec['token'] : "",
+    var _token = spec.hasOwnProperty('token') ? spec['token'] : "",
         _isCorrect = spec.hasOwnProperty('isCorrect') ? spec['isCorrect'] : false,
         _hint,
         _index = spec.hasOwnProperty('index') ? spec['index'] : -1,
@@ -1897,7 +1930,7 @@ var answer = function (view, spec) {
         return _isCorrect;
     };
 
-    that.setIsCorrect = function(val) {
+    that.setIsCorrect = function (val) {
         _isCorrect = val;
         return this;
     };
@@ -1914,7 +1947,7 @@ var answer = function (view, spec) {
         return _isLast;
     };
 
-    that.setIsLast = function(val) {
+    that.setIsLast = function (val) {
         _isLast = val;
         return this;
     };

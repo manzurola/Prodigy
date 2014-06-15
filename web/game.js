@@ -1,3 +1,35 @@
+function Game() {
+    this.exercise = null;
+    this.questions = [];
+    this.answers = null;
+    this.hints = null;
+    this.score = 0;
+    this.health = 10;
+    this.progress = null;
+    this.isPaused = false;
+    this.isFailed = false;
+    this.isCompleted = false;
+
+    this.questionBox = null;
+    this.answersBox = null;
+
+    this.game = new Game();
+}
+Game.prototype.load = function(data) {
+    for (var i=0; i<data.questions.length; i++) {
+        var question = new Question(document.createElement('div'), data.questions[i]);
+        for (var k=0; k<question.blanks.length; k++) {
+            var answers = question.blanks[i].answers;
+            for (var j=0; j<answers.length; j++) {
+                var answer = new Answer(document.createElement('span'));
+                answer.data = answers[i];
+            }
+        }
+
+        this.questions.push(question);
+    }
+};
+
 var game = function (view, data) {
 
     logIt(data);
@@ -9,7 +41,7 @@ var game = function (view, data) {
     var that = entity(view, data);
 
     var CHOICE_VIEW_FORMATS = {
-        BY_BLANK   : 0,
+        BY_BLANK:    0,
         BY_QUESTION: 1,
         BY_EXERCISE: 2
     };
@@ -17,7 +49,7 @@ var game = function (view, data) {
     var _score,
         _health = null,
         _autoMoveTimer = null,
-        _autoMoveTimeout = 600,
+        _autoMoveTimeout = 350,
         _combo = null,
         _starCounter = null,
         _clock = null,
@@ -30,10 +62,10 @@ var game = function (view, data) {
         _isPaused = false,
         _rawJsonExercise,
         _gameOverStats = {
-            score        : 0,
+            score:         0,
             accuracyBonus: 0,
-            timeBonus    : 0,
-            totalScore   : 0
+            timeBonus:     0,
+            totalScore:    0
         };
 
     /**
@@ -183,7 +215,6 @@ var game = function (view, data) {
         }, 0);
     }
 
-
     /**
      * Event handler for a blank select event.
      *
@@ -201,7 +232,7 @@ var game = function (view, data) {
         logIt(targetBlank);
 
         //  handle event only if blank is different from currently selected one
-        if( targetBlank === _selectedBlank ){
+        if (targetBlank === _selectedBlank) {
             return;
         }
 
@@ -241,7 +272,7 @@ var game = function (view, data) {
         }
 
         var isCorrectChoice = _selectedBlank.submitAnswer(multiChoice.getAnswer());
-//            var isCorrect = multiChoice.getAnswer().isCorrect();
+        //            var isCorrect = multiChoice.getAnswer().isCorrect();
         if (isCorrectChoice) {
             _handleCorrectSubmission(multiChoice);
         } else {
@@ -319,7 +350,7 @@ var game = function (view, data) {
         var answerToSubmit = multiChoice.getAnswer();
         answerToSubmit.getHint().appendTo(_exercise);
 
-//        _thisBlank.solved(false);                   //  animate mistake in blank
+        //        _thisBlank.solved(false);                   //  animate mistake in blank
         multiChoice.toggleState(multiChoice.states().MISTAKE);          //  animate mistake in multichoice
         _selectedBlank.submitAnswer(answerToSubmit);        //  change state of blank
 
@@ -516,12 +547,12 @@ var game = function (view, data) {
         //  for each question in exercise
         _exercise.getQuestions().map(function (question) {
             question.on('select', _handleQuestionSelectEvent, question)
-                .on('prev', _handleQuestionPrevEvent, question)     //  on request for prev question
-                .on('next', _handleQuestionNextEvent, question)     //  on request for next question
+                .on('prev', _handleQuestionPrevEvent, question)//  on request for prev question
+                .on('next', _handleQuestionNextEvent, question)//  on request for next question
                 //  for each blank in question
                 .getBlanks()
                 .map(function (blank) {
-                    blank.on('select', _handleBlankSelectEvent, blank)     //  subscribe to blank select events
+                    blank.on('select', _handleBlankSelectEvent, blank)//  subscribe to blank select events
                         .getMultiChoiceManager()
                         .getChoices()
                         .map(function (choice) {
@@ -562,8 +593,8 @@ var game = function (view, data) {
     function _makeCombo() {
         var comboView = document.createElement('div');
         return combo(comboView, {});
-//            .on('nextMultiplierLevelReached', _nextMultiplierLevelReached)
-//            .on('comboLost', _handleComboLostEvent);
+        //            .on('nextMultiplierLevelReached', _nextMultiplierLevelReached)
+        //            .on('comboLost', _handleComboLostEvent);
     }
 
     /**
@@ -598,7 +629,6 @@ var game = function (view, data) {
         return score(scoreView, {});
     }
 
-
     /**
      * Creates and appends a puase button to screen
      * @return {HTMLElement}
@@ -617,7 +647,6 @@ var game = function (view, data) {
     return that;
 
 };     //  end game class
-
 
 /**
  * COMBO CHAIN
@@ -716,7 +745,7 @@ var COMBO_CHAIN = (function () {
          * @param callback
          * @return {*}
          */
-        start    : function (callback) {
+        start:     function (callback) {
             _callback = callback;
             start();
             return this;
@@ -726,7 +755,7 @@ var COMBO_CHAIN = (function () {
          * else a specific delta amount of time is added to the timer
          * @param blank
          */
-        chain    : function (blank) {
+        chain:     function (blank) {
             chain(blank);
             return this;
         },
@@ -740,7 +769,7 @@ var COMBO_CHAIN = (function () {
         /**
          * pauses timer
          */
-        freeze   : function () {
+        freeze:    function () {
 
         },
         /**
