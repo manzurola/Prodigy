@@ -33,7 +33,7 @@ var welcomeScreen = function(view, spec){
 
     (function() {
         view.className = CSS_CLASS_NAMES.SELF;
-        title = _createAndAppendTitle('pr<span class="blank"><span class="star"></span></span>digy');
+        title = _createAndAppendTitle('prodigy');
         slogan = _createAndAppendSlogan('Power Up Your Grammar');
         multiChoiceStart = _createAndAppendStartButton();
     }());

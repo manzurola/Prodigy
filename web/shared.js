@@ -10,6 +10,15 @@ var ERRORS = {
     NOT_IMPLEMENTED: 'method not implemented'
 };
 
+function extend(destination, source) {
+    for (var k in source) {
+        if (source.hasOwnProperty(k)) {
+            destination[k] = source[k];
+        }
+    }
+    return destination;
+}
+
 Array.prototype.shuffle = function () {
     var i = this.length, j, tempi, tempj;
     if (i == 0) return this;

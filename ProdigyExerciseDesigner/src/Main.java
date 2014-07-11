@@ -9,7 +9,7 @@ public class Main {
 
     public static void main( final String[] args ) throws Exception {
 
-        ExerciseParser parser = ExerciseParser.getWriter( "Data/Exercises/rewrite_it_data.txt" );
+        ExerciseParser parser = ExerciseParser.getWriter( "Data/Exercises/present_simple/exercise_1_present_simple.txt" );
         parser.parseAndPersist();
     }
 }

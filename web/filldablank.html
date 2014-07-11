@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Prodigy</title>
+    <base href="http://localhost:8080/Prodigy/Resources/">
+
+    <link rel="stylesheet" type="html/css" href="Exercises/FillDaBlank/exercise.css"/>
+    <link rel="stylesheet" type="html/css" href="Exercises/FillDaBlank/animations.css"/>
+    <link rel="stylesheet" type="html/css" href="main.css">
+
+    <script src="Entity/log.js"></script>
+    <script src="Entity/core.js"></script>
+    <script src="Entity/entity.js"></script>
+    <script src="Exercises/FillDaBlank/answer.js"></script>
+    <script src="Exercises/FillDaBlank/blank.js"></script>
+    <script src="Exercises/FillDaBlank/question.js"></script>
+    <script src="Exercises/FillDaBlank/exercise.js"></script>
+
+</head>
+
+<body>
+<script>
+    var exercise = null;
+    window.onload = function() {
+
+        var request = new XMLHttpRequest();
+        request.addEventListener("load", function() {
+            log(this.responseText);
+            var data = JSON.parse(this.responseText)['exercise'];
+            log(data);
+            exercise = new Exercise(document.getElementById('exercise'))
+                    .load(data);
+        }, false);
+
+        request.open('GET', 'http://localhost:8080/Prodigy/rest/exercises/3', true);
+        request.send();
+    };
+</script>
+<div id="prodigy">
+    <div id="exercise" class="screen">
+        <div id="question"></div>
+        <div id="answers"></div>
+    </div>
+</div>
+</body>
+</html>
