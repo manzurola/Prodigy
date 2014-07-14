@@ -59,32 +59,34 @@ Exercise.prototype.load = function (spec) {
     return this;
 };
 Exercise.prototype.submitAnswer = function (answer) {
-
-    var thisQuestion, thisBlank;
-
     log('submitAnswer', [answer]);
 
-    thisBlank = this.scene.question.getSelectedBlank();
+    if (answer.isSubmitted()) {
+        return this;
+    }
+
+    answer.submit();
+    var thisBlank = this.scene.question.getSelectedBlank();
     thisBlank.fill(answer);
 //    answer.submit() //submit progresses question to next blank if one exists
 //        .disable();
-    answer.disable();
     if (!thisBlank.isSolved() && thisBlank.attemptsMade() < thisBlank.maxAttempts()) {
         return this;
     }
 
     var nextQuestion, nextBlank;
-
     nextBlank = this.getNextBlank();
     if (!nextBlank) {
         nextQuestion = this.getNextQuestion();
         if (!nextQuestion) {
             return this.end();
         }
-        return this.setQuestion(nextQuestion);
+        setTimeout(this.setQuestion.bind(this, nextQuestion), 1500);
+        return this;
     }
 
-    return this.selectBlank(nextBlank);
+    setTimeout(this.selectBlank.bind(this, nextBlank), 300);
+    return this;
 };
 Exercise.prototype.getSelectedBlank = function() {
     return this.scene.question.getSelectedBlank();

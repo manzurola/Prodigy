@@ -7,6 +7,7 @@ function Blank(elem) {
     Entity.call(this, elem);
     this.__answers__ = [];
     this.__inside__ = null;
+    this.__star__ = null;
     this.__isSolved__ = false;
     this.__isSelected__ = false;
     this.__attemptsMade__ = 0;
@@ -30,6 +31,9 @@ Blank.prototype.load = function (spec) {
     }
     this.__maxAttempts__ = data.maxAttempts;
     this.setClassName('blank');
+    this.__star__ = new Entity('span').setClassName('answer')
+        .appendChild(new Entity('span').setClassName('icon-star'));
+    this.appendChild(this.__star__);
     return this;
 };
 Blank.prototype.select = function () {
@@ -45,21 +49,30 @@ Blank.prototype.deselect = function () {
     return this;
 };
 Blank.prototype.fill = function (answer) {
-    answer.clone();
-    var copyOfAnswer = answer.clone(true);
 
-    if (copyOfAnswer.isCorrect()) {
+    var copyOfAnswer = answer.clone(true),
+        origToken = answer.getToken;
+
+    this.__attemptsMade__ += 1;
+    if (answer.isCorrect()) {
         if (this.__inside__) {
             this.__inside__.remove();
         }
 
         this.__isSolved__ = true;
-        this.appendChild(copyOfAnswer);
+        this.__star__.remove();
+        // If correct on first attempt
+        if (this.__attemptsMade__ === 1) {
+//            answer.setFeedbackToken('GREAT!');
+//            answer.on('webkitAnimationEnd', function (target) {
+//                target.setText(origToken);
+//            })
+        }
+        this.appendChild(copyOfAnswer.submit());
         this.__inside__ = copyOfAnswer;
     }
 
-    this.__attemptsMade__ += 1;
-    log('attemptsMade: ' +this.__attemptsMade__);
+    log('attemptsMade: ' + this.__attemptsMade__);
 
     this.fire('fill');
 
@@ -81,7 +94,7 @@ Blank.prototype.getAnswersSubmitted = function () {
 Blank.prototype.countAnswersSubmitted = function () {
     return this.getAnswersSubmitted().length;
 };
-Blank.prototype.isSelected = function() {
+Blank.prototype.isSelected = function () {
     return this.__isSelected__;
 };
 Blank.prototype.attemptsMade = function () {

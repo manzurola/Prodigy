@@ -5,8 +5,9 @@
     <title>Prodigy</title>
     <base href="http://localhost:8080/Prodigy/Resources/">
 
-    <link rel="stylesheet" type="html/css" href="Exercises/FillDaBlank/exercise.css"/>
+    <link rel="stylesheet" type="html/css" href="fonts/FortAwesome-Font-Awesome-13d5dd3/css/font-awesome.css">
     <link rel="stylesheet" type="html/css" href="Exercises/FillDaBlank/animations.css"/>
+    <link rel="stylesheet" type="html/css" href="Exercises/FillDaBlank/exercise.css"/>
     <link rel="stylesheet" type="html/css" href="main.css">
 
     <script src="Entity/log.js"></script>
@@ -33,14 +34,16 @@
                     .load(data);
         }, false);
 
-        request.open('GET', 'http://localhost:8080/Prodigy/rest/exercises/3', true);
+        request.open('GET', 'http://localhost:8080/Prodigy/rest/exercises/2', true);
         request.send();
     };
 </script>
 <div id="prodigy">
     <div id="exercise" class="screen">
+        <div id="top"></div>
         <div id="question"></div>
         <div id="answers"></div>
+        <div id="bottom"></div>
     </div>
 </div>
 </body>

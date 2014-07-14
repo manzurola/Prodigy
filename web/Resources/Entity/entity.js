@@ -25,12 +25,18 @@ Entity.prototype.on = function (type, method, parameters) {
     var handler = {
         method:     method,
         parameters: parameters
-    };
+    }, domEventName;
 
+    // register a new event with the dom element
     if (!this.__registry.hasOwnProperty(type)) {
         this.__registry[type] = [];
-        this.__element.addEventListener(type, this.fire.bind(this));   //one time per event type
+        domEventName = Entity.translateToDomEventName(type);
+        if (domEventName) {
+            this.__element.addEventListener(domEventName, this.fire.bind(this, type));
+        }
     }
+
+    // add a unique handler for the event
     if (!this.__registry[type].contains(handler)) {
         this.__registry[type].push(handler);
     }
@@ -114,7 +120,7 @@ Entity.prototype.appendChild = function (child) {
     return this;
 };
 Entity.prototype.appendChildren = function (children) {
-    for (var i=0; i<children.length; i++) {
+    for (var i = 0; i < children.length; i++) {
         this.__element.appendChild(children[i]);
     }
     return this;
@@ -124,7 +130,7 @@ Entity.prototype.removeChild = function (child) {
     return this;
 };
 Entity.prototype.removeChildren = function (children) {
-    for (var i=0; i<children.length; i++) {
+    for (var i = 0; i < children.length; i++) {
         this.__element.removeChild(children[i]);
     }
     return this;
@@ -169,7 +175,13 @@ Entity.prototype.clone = function (deep) {
     log('clone called on: ', [this]);
     for (var prop in this) {
         if (this.hasOwnProperty(prop) && prop !== '__element') {
-            clone[prop] = this[prop];
+            if (prop.hasOwnProperty('__element')) {
+                log ('cloning entity prop', this[prop]);
+                clone[prop] = this[prop].clone(deepClone);
+            }
+            else if (prop !== '__element') {
+                clone[prop] = this[prop];
+            }
         }
     }
     return clone;
@@ -204,6 +216,14 @@ Entity.prototype.enable = function () {
     this.__isDisabled = false;
     return this;
 };
+Entity.prototype.show = function () {
+    this.__element.style.visibility = 'visible';
+    return this;
+};
+Entity.prototype.hide = function () {
+    this.__element.style.visibility = 'hidden';
+    return this;
+};
 
 Entity.presets = {};
 Entity.presets['default'] = function () {
@@ -223,4 +243,28 @@ Entity.presets['list'] = function (elem) {
     entity.setClassName('list');
 
     return entity;
+};
+Entity.translateDomToEntityEvent = function (src) {
+    switch (src) {
+        case 'animationend':
+            return ['webkitAnimationEnd'];
+            break;
+        case 'click':
+            return ['click'];
+            break;
+        default:
+            return [src];
+    }
+};
+Entity.translateToDomEventName = function (src) {
+    switch (src) {
+        case 'animationEnd':
+            return 'webkitAnimationEnd';
+            break;
+        case 'click':
+            return 'click';
+            break;
+        default:
+            return src;
+    }
 };

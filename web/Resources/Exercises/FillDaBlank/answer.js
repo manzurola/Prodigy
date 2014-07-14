@@ -7,6 +7,7 @@ function Answer(elem) {
     Entity.call(this, elem);
     this.__isCorrect__ = false;
     this.__token__ = '';
+    this.__feedbackToken__ = '';
     this.__isSubmitted__ = false;
 }
 Answer.prototype = Object.create(Entity.prototype);
@@ -19,9 +20,16 @@ Answer.prototype.load = function(spec) {
     };
     extend(data, spec);
     this.__isCorrect__ = data.correct;
-    this.__token__ = data.token;
+    this.__token__ = new Entity('span')
+        .setClassName('token')
+        .setText(data.token);
+    this.__feedbackToken__ = new Entity('span')
+        .setClassName('feedback-token')
+        .setText('GREAT!');
     this.setClassName('answer')
-        .setToken(this.__token__);
+        .appendChild(this.__token__)
+        .appendChild(this.__feedbackToken__);
+
     return this;
 };
 Answer.prototype.submit = function () {
@@ -31,6 +39,11 @@ Answer.prototype.submit = function () {
     } else {
         this.addClasses('wrong');
     }
+    this.on('animationEnd', function(target) {
+        log('animation end', target);
+        target.removeClasses('correct')
+            .removeClasses('wrong');
+    }, this);
     this.fire('submit');
     return this;
 };
@@ -43,11 +56,18 @@ Answer.prototype.hide = function () {
     return this;
 };
 Answer.prototype.getToken = function() {
-    return this.__token__;
+    return this.__token__.getText();
 };
 Answer.prototype.setToken = function(token) {
-    this.__token__ = token;
-    return this.setText(this.__token__);
+    this.__token__.setText(token);
+    return this;
+};
+Answer.prototype.getFeedbackToken = function() {
+    return this.__feedbackToken__.getText();
+};
+Answer.prototype.setFeedbackToken = function(token) {
+    this.__feedbackToken__.setText(token);
+    return this;
 };
 Answer.prototype.isCorrect = function() {
     return this.__isCorrect__;
