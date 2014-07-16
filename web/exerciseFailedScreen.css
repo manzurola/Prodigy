@@ -3,8 +3,6 @@
     padding-top: 10%;
 
     background: -webkit-radial-gradient(center, ellipse cover, rgba(203,7,17,1) 0%,rgba(101,189,247,0) 100%);
-
-    z-index: 10;
 }
 
 #exerciseFailedScreen .title {

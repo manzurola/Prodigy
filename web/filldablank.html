@@ -34,15 +34,22 @@
                     .load(data);
         }, false);
 
-        request.open('GET', 'http://localhost:8080/Prodigy/rest/exercises/2', true);
+        var test = new Entity('span').setClassName('answer')
+                .appendChild(new Entity('span').setClassName('token').setText('hello').hide());
+        var size = test.measure();
+        log('size', size);
+
+        request.open('GET', 'http://localhost:8080/Prodigy/rest/exercises/3', true);
         request.send();
     };
 </script>
 <div id="prodigy">
     <div id="exercise" class="screen">
         <div id="top"></div>
-        <div id="question"></div>
-        <div id="answers"></div>
+        <div id="board">
+            <div id="question"></div>
+            <div id="answers"></div>
+        </div>
         <div id="bottom"></div>
     </div>
 </div>

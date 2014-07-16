@@ -2,19 +2,19 @@
 
 #subjects {
 	text-align: center;
-
-    z-index: 10;
+	padding-top: 12%;
 }
 
 #subjects #subjectSelectionTitle{
 	font-size: 1.25em;
     position: absolute;
     display: inline-block;
-    top: 3em;
+    top: 12%;
     left: 0;
     right: 0;
     margin: 0 auto;
     width: auto;
+
     -webkit-text-fill-color: black;
 
 }
@@ -23,25 +23,32 @@
     position: absolute;
     display: block;
 	list-style-type: none;
-    top: 6em;
     left: 0;
     right: 0;
     margin: 0 auto;
 	width: 70%;
+	height: auto;
 }
 
 #subjects #subjectList > * {
-
-    border: 0.025em ridge black;
+    border: 4px ridge black;
     background: white;
-
-
 }
 
 #subjects #subjectList > *:hover {
-    -webkit-text-stroke-color: white;
+    -webkit-text-stroke-color: black;
     -webkit-text-fill-color: white;
 
+    /*background: #FF3300;*/
     background: #1a82f7;
+
+    /*background: rgb(255,93,177); *//* Old browsers */
+    /*background: -moz-linear-gradient(top, rgba(255,93,177,1) 0%, rgba(239,1,124,1) 100%); */
+    /*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,93,177,1)), color-stop(100%,rgba(239,1,124,1))); */
+    /*background: -webkit-linear-gradient(top, rgba(255,93,177,1) 0%,rgba(239,1,124,1) 100%); */
+    /*background: -o-linear-gradient(top, rgba(255,93,177,1) 0%,rgba(239,1,124,1) 100%); */
+    /*background: -ms-linear-gradient(top, rgba(255,93,177,1) 0%,rgba(239,1,124,1) 100%); */
+    /*background: linear-gradient(to bottom, rgba(255,93,177,1) 0%,rgba(239,1,124,1) 100%); */
+    /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff5db1', endColorstr='#ef017c',GradientType=0 ); */
 }
 

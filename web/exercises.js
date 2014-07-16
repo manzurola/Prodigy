@@ -1,18 +1,13 @@
 var exerciseSelectionScreen = function (view,spec) {
 
-    var _cssClassNames = {
-        LOADING: 'loading'
-    };
-
-    logIt(spec);
-
     var that = entity(view, spec);
     var _exerciseListView = document.getElementById('exerciseList'),
         exerciseListItems,
         _selectedExercise,
         backButton;
 
-    (function init(){
+
+    (function(){
         var backButtonView = document.getElementById('backButtonExerciseSelectionScreen');
         backButton = entity(backButtonView, {})
             .on('select', _handleBackButtonPress);
@@ -20,7 +15,6 @@ var exerciseSelectionScreen = function (view,spec) {
 
     //  augment screen
     that.loadExercisesBySubject = function(subject){
-        _clearExerciseList();
         _fetchExercisesFromServer(subject['exercises']['href']);
         return this;
     };
@@ -31,8 +25,6 @@ var exerciseSelectionScreen = function (view,spec) {
 
     function _handleExerciseSelectedEvent(item) {
         _fetchSelectedExerciseDataFromServer(item.getData()['href']);
-
-        logIt(item.getData()['href']);
     }
 
     function _handleBackButtonPress(){
@@ -47,51 +39,15 @@ var exerciseSelectionScreen = function (view,spec) {
     function _fetchExercisesFromServer(href) {
         var xmlhttp = new XMLHttpRequest();
         var exercises = [];
-//        xmlhttp.onreadystatechange = function () {
-//            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-//                exercises = JSON.parse(xmlhttp.responseText)['exercises'];
-//                _clearExerciseList();
-//                _loadExerciseList(exercises);
-//            }
-//        };
-
-        xmlhttp.addEventListener("progress", _updateProgress, false);
-        xmlhttp.addEventListener("load", _transferComplete, false);
-        xmlhttp.addEventListener("error", _transferFailed, false);
-        xmlhttp.addEventListener("abort", _transferCanceled, false);
-
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                exercises = JSON.parse(xmlhttp.responseText)['exercises'];
+                _clearExerciseList();
+                _loadExerciseList(exercises);
+            }
+        };
         xmlhttp.open('GET', href, true);
         xmlhttp.send();
-
-        view.classList.add(_cssClassNames.LOADING);
-    }
-
-    // progress on transfers from the server to the client (downloads)
-    function _updateProgress(oEvent) {
-        if (oEvent.lengthComputable) {
-            var percentComplete = oEvent.loaded / oEvent.total;
-            logIt('progress: ' + percentComplete);
-            // ...
-        } else {
-            // Unable to compute progress information since the total size is unknown
-        }
-    }
-
-    function _transferComplete(evt) {
-        view.classList.remove(_cssClassNames.LOADING);
-        logIt(evt);
-        var xmlhttp = evt.target;
-        var exercises = JSON.parse(xmlhttp.responseText)['exercises'];
-
-        _loadExerciseList(exercises);
-    }
-
-    function _transferFailed(evt) {
-        alert("An error occurred while transferring the file.");
-    }
-
-    function _transferCanceled(evt) {
-        alert("The transfer has been canceled by the user.");
     }
 
     function _fetchSelectedExerciseDataFromServer(href) {
@@ -106,8 +62,8 @@ var exerciseSelectionScreen = function (view,spec) {
                 that.fireEvent('exerciseSelected');
             }
         };
-        xmlhttp.open('GET', href, false);
-        xmlhttp.send(null);
+        xmlhttp.open('GET', href, true);
+        xmlhttp.send();
     }
 
     /**
@@ -117,7 +73,7 @@ var exerciseSelectionScreen = function (view,spec) {
     function _loadExerciseList(exercises) {
 
         for (var i = 0; i < exercises.length; i++) {
-            _createAndAppendExerciseItem(exercises[i]);
+            $(_exerciseListView).append(_createAndAppendExerciseItem(exercises[i]));
         }
     }
 
@@ -130,7 +86,7 @@ var exerciseSelectionScreen = function (view,spec) {
     /**
      * Creates an DOM item element populated with supplied data
      * @param exercise
-     * @return {*|entity} an item entity
+     * @return {*|jQuery} a jquery object
      */
     function _createAndAppendExerciseItem(exercise) {
 

@@ -10,15 +10,6 @@ var ERRORS = {
     NOT_IMPLEMENTED: 'method not implemented'
 };
 
-function extend(destination, source) {
-    for (var k in source) {
-        if (source.hasOwnProperty(k)) {
-            destination[k] = source[k];
-        }
-    }
-    return destination;
-}
-
 Array.prototype.shuffle = function () {
     var i = this.length, j, tempi, tempj;
     if (i == 0) return this;
@@ -36,79 +27,79 @@ Array.prototype.clone = function () {
     return this.slice(0);
 };
 
-//var prodigyScreen = function (view) {
-//
-//    var CSS_CLASS_NAMES = {
-//        SCREEN: 'screen'
-//    };
-//
-//    var that = {};
-//
-//    var eventRegistry = {};
-//
-//
-//    (function () {
-//        view.className = CSS_CLASS_NAMES.SCREEN;
-//    }());
-//
-//    that.fireEvent = function (event) {
-//
-//        var array, func, parameters, handler, type;
-//        type = typeof event === 'string' ? event : event.type;
-//
-//        if (eventRegistry.hasOwnProperty(type)) {
-//            array = eventRegistry[type];
-//            for (var i = 0; i < array.length; i++) {
-//                handler = array[i];
-//                func = handler.method;
-//                parameters = handler.parameters || this;
-//                func.apply(this, parameters);
-//            }
-//        }
-//        return this;
-//    };
-//
-//    that.show = function () {
-//        view.style.display = 'block';
-//        that.fireEvent('show');
-//        return this;
-//    };
-//
-//    that.hide = function () {
-//        view.style.display = 'none';
-//        that.fireEvent('hide');
-//        return this;
-//    };
-//
-//    that.refresh = function () {
-//        return this;
-//    };
-//
-//    that.on = function (type, method, parameters) {
-//        var handler = {
-//            method    : method,
-//            parameters: parameters
-//        };
-//        if (eventRegistry.hasOwnProperty(type)) {
-//            eventRegistry[type].push(handler);
-//        } else {
-//            eventRegistry[type] = [handler];
-//        }
-//        return this;
-//    };
-//
-//    return that;
-//};
-//
-//var prodigyScreenCode = {
-//    HOME            : 0,
-//    SUBJECT_SELECT  : 1,
-//    EXERCISE_SELECT : 2,
-//    GAME            : 3,
-//    EXERCISE_FAILED : 4,
-//    EXERCISE_CLEARED: 5,
-//    PAUSED          : 6
-//};
+var prodigyScreen = function (view) {
+
+    var CSS_CLASS_NAMES = {
+        SCREEN: 'screen'
+    };
+
+    var that = {};
+
+    var eventRegistry = {};
+
+
+    (function () {
+        view.className = CSS_CLASS_NAMES.SCREEN;
+    }());
+
+    that.fireEvent = function (event) {
+
+        var array, func, parameters, handler, type;
+        type = typeof event === 'string' ? event : event.type;
+
+        if (eventRegistry.hasOwnProperty(type)) {
+            array = eventRegistry[type];
+            for (var i = 0; i < array.length; i++) {
+                handler = array[i];
+                func = handler.method;
+                parameters = handler.parameters || this;
+                func.apply(this, parameters);
+            }
+        }
+        return this;
+    };
+
+    that.show = function () {
+        view.style.display = 'block';
+        that.fireEvent('show');
+        return this;
+    };
+
+    that.hide = function () {
+        view.style.display = 'none';
+        that.fireEvent('hide');
+        return this;
+    };
+
+    that.refresh = function () {
+        return this;
+    };
+
+    that.on = function (type, method, parameters) {
+        var handler = {
+            method    : method,
+            parameters: parameters
+        };
+        if (eventRegistry.hasOwnProperty(type)) {
+            eventRegistry[type].push(handler);
+        } else {
+            eventRegistry[type] = [handler];
+        }
+        return this;
+    };
+
+    return that;
+};
+
+var prodigyScreenCode = {
+    HOME            : 0,
+    SUBJECT_SELECT  : 1,
+    EXERCISE_SELECT : 2,
+    GAME            : 3,
+    EXERCISE_FAILED : 4,
+    EXERCISE_CLEARED: 5,
+    PAUSED          : 6
+};
 
 var entity = function (view, data) {
 
@@ -123,6 +114,10 @@ var entity = function (view, data) {
 
         if (view) {
             _enableSelectEvents();
+//            view.addEventListener('click', function (e) {
+//                e.stopPropagation();
+//                that.fireEvent('select');   //  abstract the click as a select event
+//            }, false);
         }
     }());
 
@@ -176,7 +171,6 @@ var entity = function (view, data) {
     that.show = function () {
         if (!isShowing) {
             view.style.display = originalDisplayStyle;
-//            view.style.visibility = 'visible';
             isShowing = true;
         }
         return this;
@@ -185,7 +179,6 @@ var entity = function (view, data) {
     that.hide = function () {
         if (isShowing) {
             view.style.display = 'none';
-//            view.style.visibility = 'hidden';
             isShowing = false;
         }
         return this;
@@ -246,6 +239,7 @@ var entity = function (view, data) {
     }
 
     function _enableSelectEvents(){
+
         //  allow only a single event listener for a click event
         view.onclick = _onClick;
     }
@@ -256,31 +250,9 @@ var entity = function (view, data) {
 
     function _onClick(event) {
         event.stopPropagation();
-        setTimeout(function(){
-            that.fireEvent('select');   //  abstract the click as a select event
-        }, 50);
+        that.fireEvent('select');   //  abstract the click as a select event
     }
 
     return that;
 };
-
-var Messenger = function(){
-
-    this.postMessage = function(message) {
-        logIt("messenger: postMessage");
-        logIt(message);
-        window.parent.postMessage(message, "*");
-    };
-};
-
-var APPLICATION = (function(){
-    var invocations = 0;
-
-    return {
-        do : function(){
-            invocations++;
-            logIt(invocations);
-        }
-    };
-}());
 

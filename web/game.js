@@ -1,55 +1,32 @@
-function Game() {
-    this.exercise = null;
-    this.questions = [];
-    this.answers = null;
-    this.hints = null;
-    this.score = 0;
-    this.health = 10;
-    this.progress = null;
-    this.isPaused = false;
-    this.isFailed = false;
-    this.isCompleted = false;
+var game = function (view) {
 
-    this.questionBox = null;
-    this.answersBox = null;
 
-    this.game = new Game();
-}
-Game.prototype.load = function(data) {
-    for (var i=0; i<data.questions.length; i++) {
-        var question = new Question(document.createElement('div'), data.questions[i]);
-        for (var k=0; k<question.blanks.length; k++) {
-            var answers = question.blanks[i].answers;
-            for (var j=0; j<answers.length; j++) {
-                var answer = new Answer(document.createElement('span'));
-                answer.data = answers[i];
-            }
-        }
+    /*
+        TODO: 1. capture scroll event to select next/prev blank in question
+        TODO: 2. Arcade mode: eliminate irrelevant answers after blank solved
+        TODO: 2.1. Show unique answers
+        TODO: 2.2. CSS styles for game modes
+     */
 
-        this.questions.push(question);
-    }
-};
 
-var game = function (view, data) {
-
-    logIt(data);
 
     var CSS_CLASS_NAMES = {
         PAUSE_BUTTON: 'pause-button'
     };
 
-    var that = entity(view, data);
+    var that = entity(view);
 
     var CHOICE_VIEW_FORMATS = {
-        BY_BLANK:    0,
+        BY_BLANK   : 0,
         BY_QUESTION: 1,
         BY_EXERCISE: 2
     };
 
     var _score,
+        _choiceViewFormat = CHOICE_VIEW_FORMATS.BY_QUESTION,
         _health = null,
         _autoMoveTimer = null,
-        _autoMoveTimeout = 350,
+        _autoMoveTimeout = 600,
         _combo = null,
         _starCounter = null,
         _clock = null,
@@ -62,25 +39,17 @@ var game = function (view, data) {
         _isPaused = false,
         _rawJsonExercise,
         _gameOverStats = {
-            score:         0,
+            score        : 0,
             accuracyBonus: 0,
-            timeBonus:     0,
-            totalScore:    0
+            timeBonus    : 0,
+            totalScore   : 0
         };
 
-    /**
-     * Initializes game objects with supplied exercise data
-     * @param exerciseJson a JSON object containing exercise data
-     * @return {*}
-     */
     that.initExercise = function (exerciseJson) {
         _init(exerciseJson);
         return this;
     };
 
-    /**
-     * @return {{score: number, accuracyBonus: number, timeBonus: number, totalScore: number}}
-     */
     that.getGameStats = function () {
         return _gameOverStats;
     };
@@ -93,17 +62,12 @@ var game = function (view, data) {
         return _starCounter.getCount();
     };
 
-    /**
-     * Returns the maximum number of stars that could be collected in the current game.
-     * @return {int}
-     */
     that.getTotalStarsToCollect = function () {
         return _starCounter.getTotal();
     };
 
     /**
-     * Gets the calculated grade from 0-100 based on the player's performance in current completed game
-     * @return {int}
+     * Gets the calculated grade from 0-100 based on the performance in current completed game
      */
     that.getGrade = function () {
         var totalStarsToCollect = _starCounter.getTotal();
@@ -119,46 +83,26 @@ var game = function (view, data) {
         return _score.getPoints();
     };
 
-    /**
-     * Starts the game - selects the first question in game.
-     * @return {this}
-     */
     that.start = function () {
         _start();
         return this;
     };
 
-    /**
-     * Pauses the current game - relevant only if a timer is ticking
-     * @return {this}
-     */
     that.pause = function () {
         _pause();
         return this;
     };
 
-    /**
-     * Resumes the game from a paused state
-     * @return {this}
-     */
     that.resume = function () {
         _resume();
         return this;
     };
 
-    /**
-     * Clears current game and starts a new one with same exercise
-     * @return {this}
-     */
     that.restart = function () {
         _restart();
         return this;
     };
 
-    /**
-     * Quits from game - clears screen and stats
-     * @return {this}
-     */
     that.quit = function () {
         //  TODO: nullify entities, stop clock etc.
         _clearScreen();
@@ -168,7 +112,8 @@ var game = function (view, data) {
     /****************************************   private methods *************************************/
 
     /**
-     *  Instantiates objects with supplied data and binds events.
+     *  prepares all entities and assigns initial data by exercise data supplied
+     *  Starts a new game with current loaded level
      */
     function _init(exerciseJson) {
 
@@ -202,11 +147,6 @@ var game = function (view, data) {
         return that;
     }
 
-    /**
-     * Not used
-     * @param callback
-     * @private
-     */
     function _playIntro(callback) {
         logIt('playing intro...');
         setTimeout(function () {
@@ -214,6 +154,7 @@ var game = function (view, data) {
             callback();
         }, 0);
     }
+
 
     /**
      * Event handler for a blank select event.
@@ -232,7 +173,7 @@ var game = function (view, data) {
         logIt(targetBlank);
 
         //  handle event only if blank is different from currently selected one
-        if (targetBlank === _selectedBlank) {
+        if( targetBlank === _selectedBlank ){
             return;
         }
 
@@ -267,18 +208,15 @@ var game = function (view, data) {
      */
     function _handleMultiChoiceSelectEvent(multiChoice) {
 
-        if (_selectedBlank.isSolved()) {
-            return;
+        /*  if this blank has not been previously solved - submit the multichoice    */
+        if (!_selectedBlank.isSolved()) {
+            var isCorrect = multiChoice.getAnswer().isCorrect();
+            if (isCorrect) {
+                _handleCorrectSubmission(multiChoice);
+            } else {
+                _handleFalseSubmission(multiChoice);
+            }
         }
-
-        var isCorrectChoice = _selectedBlank.submitAnswer(multiChoice.getAnswer());
-        //            var isCorrect = multiChoice.getAnswer().isCorrect();
-        if (isCorrectChoice) {
-            _handleCorrectSubmission(multiChoice);
-        } else {
-            _handleFalseSubmission(multiChoice);
-        }
-
     }
 
     /**
@@ -287,6 +225,7 @@ var game = function (view, data) {
      * @private
      */
     function _handleCorrectSubmission(multiChoice) {
+
         //  if the blank contains a star, no mistakes were made
         if (_selectedBlank.getStar() !== null) {
             // Increment combo by one point
@@ -298,9 +237,12 @@ var game = function (view, data) {
         pointsGranted = _score.multiply(pointsGranted);     //  multiply by score multiplier
         _selectedBlank.setPoints(pointsGranted);            //  set multiplied points to blank
         _score.increment(pointsGranted);                    //  increment score
+
         /*  update state    */
         _blanksLeftInGame--;
         _blanksLeftInQuestion--;
+
+
         /*  remove previous hint and append new one */
         var prevSubmittedAnswer = _selectedBlank.getSubmittedAnswer();
         if (prevSubmittedAnswer) {
@@ -350,7 +292,7 @@ var game = function (view, data) {
         var answerToSubmit = multiChoice.getAnswer();
         answerToSubmit.getHint().appendTo(_exercise);
 
-        //        _thisBlank.solved(false);                   //  animate mistake in blank
+//        _thisBlank.solved(false);                   //  animate mistake in blank
         multiChoice.toggleState(multiChoice.states().MISTAKE);          //  animate mistake in multichoice
         _selectedBlank.submitAnswer(answerToSubmit);        //  change state of blank
 
@@ -547,12 +489,12 @@ var game = function (view, data) {
         //  for each question in exercise
         _exercise.getQuestions().map(function (question) {
             question.on('select', _handleQuestionSelectEvent, question)
-                .on('prev', _handleQuestionPrevEvent, question)//  on request for prev question
-                .on('next', _handleQuestionNextEvent, question)//  on request for next question
+                .on('prev', _handleQuestionPrevEvent, question)     //  on request for prev question
+                .on('next', _handleQuestionNextEvent, question)     //  on request for next question
                 //  for each blank in question
                 .getBlanks()
                 .map(function (blank) {
-                    blank.on('select', _handleBlankSelectEvent, blank)//  subscribe to blank select events
+                    blank.on('select', _handleBlankSelectEvent, blank)     //  subscribe to blank select events
                         .getMultiChoiceManager()
                         .getChoices()
                         .map(function (choice) {
@@ -593,8 +535,8 @@ var game = function (view, data) {
     function _makeCombo() {
         var comboView = document.createElement('div');
         return combo(comboView, {});
-        //            .on('nextMultiplierLevelReached', _nextMultiplierLevelReached)
-        //            .on('comboLost', _handleComboLostEvent);
+//            .on('nextMultiplierLevelReached', _nextMultiplierLevelReached)
+//            .on('comboLost', _handleComboLostEvent);
     }
 
     /**
@@ -629,6 +571,7 @@ var game = function (view, data) {
         return score(scoreView, {});
     }
 
+
     /**
      * Creates and appends a puase button to screen
      * @return {HTMLElement}
@@ -647,6 +590,7 @@ var game = function (view, data) {
     return that;
 
 };     //  end game class
+
 
 /**
  * COMBO CHAIN
@@ -745,7 +689,7 @@ var COMBO_CHAIN = (function () {
          * @param callback
          * @return {*}
          */
-        start:     function (callback) {
+        start    : function (callback) {
             _callback = callback;
             start();
             return this;
@@ -755,7 +699,7 @@ var COMBO_CHAIN = (function () {
          * else a specific delta amount of time is added to the timer
          * @param blank
          */
-        chain:     function (blank) {
+        chain    : function (blank) {
             chain(blank);
             return this;
         },
@@ -769,7 +713,7 @@ var COMBO_CHAIN = (function () {
         /**
          * pauses timer
          */
-        freeze:    function () {
+        freeze   : function () {
 
         },
         /**

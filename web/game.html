@@ -1,93 +1,95 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
 <head>
-    <meta charset="utf-8">
-    <title>Prodigy</title>
- <!---->
-    <!--<link rel="stylesheet" type="html/css" href="Resources/Game/exerciseFailedScreen.css"/>-->
-    <!--<link rel="stylesheet" type="html/css" href="Resources/Game/exerciseClearedScreen.css"/>-->
-    <!--<link rel="stylesheet" type="html/css" href="Resources/Game/Levels/FillDaBlank/fill_da_blank.css"/>-->
-    <!--<script src="Resources/Game/pausedScreen.js"></script>-->
-
-    <link rel="stylesheet" type="html/css" href="main.css"/>
-    <link rel="stylesheet" type="html/css" href="game.css"/>
-    <link rel="stylesheet" type="html/css" href="exerciseFailedScreen.css"/>
-    <link rel="stylesheet" type="html/css" href="exerciseClearedScreen.css"/>
-    <link rel="stylesheet" type="html/css" href="welcome.css"/>
-    <link rel="stylesheet" type="html/css" href="subjects.css"/>
-    <link rel="stylesheet" type="html/css" href="exercises.css"/>
-    <link rel="stylesheet" type="html/css" href="pausedScreen.css"/>
-    <!--<script src="logger.js"></script>-->
-    <!--<script src="shared.js"></script>-->
-    <!--<script src="entities.js"></script>-->
-    <script src="Resources/Game/IS/logger.js"></script>
-    <script src="Resources/Game/IS/shared.js"></script>
-    <script src="entities.js"></script>
-    <script src="welcome.js"></script>
-    <script src="subjects.js"></script>
-    <script src="exercises.js"></script>
-    <script src="pausedScreen.js"></script>
-    <script src="exerciseFailedScreen.js"></script>
-    <script src="exerciseClearedScreen.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Game Screen</title>
+    <link href='http://fonts.googleapis.com/css?family=Patrick+Hand+SC' rel='stylesheet' type='text/css'/>
+    <link href='http://fonts.googleapis.com/css?family=Snippet' rel='stylesheet' type='text/css'/>
+    <link href='http://fonts.googleapis.com/css?family=Englebert' rel='stylesheet' type='text/css'/>
+    <link href='http://fonts.googleapis.com/css?family=Josefin+Sans:700' rel='stylesheet' type='text/css'/>
+    <link href='http://fonts.googleapis.com/css?family=Loved+by+the+King' rel='stylesheet' type='text/css'/>
+    <link href="main.css" rel="stylesheet" type="text/css"/>
+    <link href="game.css" rel="stylesheet" type="text/css"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>-->
+    <script src="logger.js"></script>
     <script src="game.js"></script>
-    <!--<script src="main.js"></script>-->
-
-
-    <!--<script src="Resources/Game/exerciseFailedScreen.js"></script>-->
-    <!--<script src="Resources/Game/exerciseClearedScreen.js"></script>-->
-
-    <script src="Resources/Game/Levels/FillDaBlank/fill_da_blank.js"></script>
-
 </head>
-
 <body>
-<div id="prodigy">
-    <div id="fillDaBlank" class="screen">
-        <div id="game" class="screen">
+<div id="game">
+    <div id="gameOver" class="cover-screen"></div>
+    <div id="introScreen" class="cover-screen"></div>
+    <div id="combo"></div>
+    <ul id='question'></ul>
+    <div id="feedback"></div>
+    <ul id="multichoicer"></ul>
+    <div id='health-wrapper'>
+        <span id="heart">&#xf08a;</span>
+        <span>X</span>
+        <span id="health"></span>
+        <!--<div id="chest">-->
+        <!--<div class="heart left side top"></div>-->
+        <!--<div class="heart center">&hearts;</div>-->
+        <!--<div class="heart right side"></div>-->
+        <!--</div>-->
+    </div>
+    <div id="pause" onclick="GAME.pause()">&#xf04c;</div>
+    <div id="score-wrapper">
+        <span id="multiplier"></span>
+        <span>score</span>
+        <span id='score'>120</span>
+    </div>
+    <div id="time-wrapper">
+            <span id="time">
+                <span id="minutes"></span>:
+                <span id="seconds"></span>
+            </span>
+        <span id="clockIcon">&#xf017;</span>
+    </div>
+    <!--cover screens. i.e. failed, completed, paused-->
+    <div id='pauseScreen' class='cover-screen'>
+        <div class='title'>PAUSED</div>
+        <div id="subject">Present Simple</div>
+        <br>
+
+        <div id="exerciseTitle">Supply the correct tense</div>
+        <br><br><br>
+
+        <div class='menu'>
+            <div class='menuButton' onclick="PAUSED_GAME_SCREEN.resume()" id="pausedScreen_resume">resume</div>
+            <br>
+
+            <div class='menuButton' onclick="GAME.restart()" id="pausedScreen_restart">restart</div>
+            <br>
+
+            <div class='menuButton' onclick="GAME.quit()" id="pausedScreen_quit">quit</div>
+            <br>
         </div>
-        <!-- END GAME SCREEN -->
-        <!-- PAUSE_SCREEN SCREEN START -->
-        <!--<div id='pausedScreen' class='screen'>-->
-            <!--<div class='title'>PAUSED</div>-->
-            <!--&lt;!&ndash;<div id="pausedScreen_subject">subject</div>&ndash;&gt;-->
-            <!--&lt;!&ndash;<br>&ndash;&gt;-->
-            <!--&lt;!&ndash;<div id="pausedScreen_exerciseTitle">title</div>&ndash;&gt;-->
-            <!--&lt;!&ndash;<br><br><br>&ndash;&gt;-->
-            <!--<div class='menu'>-->
-                <!--<div class='menuButton' id="pausedScreen_resume">resume</div>-->
-                <!--<br>-->
+    </div>
+    <div id='exerciseFailedScreen' class='cover-screen'>
+        <div class='title'>
+            <span>EXERCISE</span>
+            <span>FAILED</span>
+        </div>
+        <div class='menuButton' onclick="GAME.restart()">restart</div>
+        <br>
 
-                <!--<div class='menuButton' id="pausedScreen_restart">restart</div>-->
-                <!--<br>-->
+        <div class='menuButton' onclick="GAME.quit()">quit</div>
+    </div>
+    <div id='exerciseClearedScreen' class='cover-screen'>
+        <div class='title'>EXERCISE CLEARED !</div>
+        <div id='stats'>
+            <p>score <span id='exerciseScore'></span></p>
 
-                <!--<div class='menuButton' id="pausedScreen_quit">quit</div>-->
-                <!--<br>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!-- END PAUSE_SCREEN SCREEN -->
-        <!--&lt;!&ndash; EXERCISE_FAILED SCREEN START &ndash;&gt;-->
-        <!--<div id='exerciseFailedScreen' class='screen'>-->
-            <!--<div class='title'>-->
-                <!--<span>EXERCISE</span>-->
-                <!--<span>FAILED</span>-->
-            <!--</div>-->
-            <!--<div class='menuButton' id="exerciseFailedScreen-restartButton">restart</div>-->
-            <!--<br>-->
+            <p>accuracy bonus <span id='accuracyBonus'></span></p>
 
-            <!--<div class='menuButton' id="exerciseFailedScreen-quitButton">quit</div>-->
-        <!--</div>-->
-        <!-- END EXERCISE_FAILED SCREEN -->
-        <!-- EXERCISE_CLEARED SCREEN START -->
-        <!--<div id='exerciseClearedScreen' class='screen'>-->
-            <!--<div class='title'><span>EXERCISE</span><span>CLEARED</span></div>-->
-            <!--&lt;!&ndash;<p><span class="star"></span><span id='exerciseClearedScreen-starsCollected'></span>/<span id='exerciseClearedScreen-totalStars'></span></p>&ndash;&gt;-->
-            <!--&lt;!&ndash;<p>total score <span id='exerciseClearedScreen-totalScore'></span></p>&ndash;&gt;-->
-            <!--<p><span id='exerciseClearedScreen-grade' class="grade"></span></p>-->
+            <p>time bonus <span id="timeBonus"></span></p>
 
-            <!--<div class='menuButton' id="exerciseClearedScreen-quitButton">quit</div>-->
-            <!--<div class='menuButton' id="exerciseClearedScreen-restartButton">restart</div>-->
-        <!--</div>-->
-        <!-- END EXERCISE_CLEARED SCREEN -->
+            <p>total <span id="totalScore"></span></p>
+        </div>
+        <div class='menu'>
+            <div class='menuButton' onclick="GAME.quit()">quit</div>
+            <div class='menuButton' onclick="GAME.restart()">restart</div>
+        </div>
     </div>
 </div>
 </body>

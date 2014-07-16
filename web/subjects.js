@@ -1,8 +1,4 @@
-var subjectSelectionScreen = function (view, spec) {
-
-    var _cssClassNames = {
-        LOADING: 'loading'
-    };
+var subjectSelectionScreen = function(view, spec){
 
     var that = entity(view, spec);
     var _subjectListView = document.getElementById('subjectList'),
@@ -10,93 +6,61 @@ var subjectSelectionScreen = function (view, spec) {
         _subjectListItems = [],
         _selectedSubject;
 
-    (function () {
+    (function(){
         var backButtonView = document.getElementById('backButtonSubjectSelectionScreen');
         _backButton = entity(backButtonView, {})
             .on('select', _handleBackButtonPress);
     }());
 
     //  augment screen
-    that.loadSubjects = function () {
-        _clearSubjectList();
+    that.loadSubjects = function(){
         _fetchSubjectsFromServer();
         return this;
     };
 
-    that.getSelectedSubject = function () {
+    that.getSelectedSubject = function(){
         return _selectedSubject;
     };
 
-    function _handleSubjectSelectedEvent(subject) {
+    function _handleSubjectSelectedEvent(subject){
         _selectedSubject = subject.getData();
         that.fireEvent('subjectSelected');
     }
 
-    function _handleBackButtonPress() {
+    function _handleBackButtonPress(){
         that.fireEvent('back');
     }
 
-    function _fetchSubjectsFromServer() {
+    function _fetchSubjectsFromServer(){
 
         var url = "rest/subjects";              //  the entry point to server api
         var xmlhttp = new XMLHttpRequest();
-
-        xmlhttp.addEventListener("progress", _updateProgress, false);
-        xmlhttp.addEventListener("load", _transferComplete, false);
-        xmlhttp.addEventListener("error", _transferFailed, false);
-        xmlhttp.addEventListener("abort", _transferCanceled, false);
-
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                var subjects = JSON.parse(xmlhttp.responseText)['subjects'];
+                _populateSubjectList(subjects);
+            }
+        };
         xmlhttp.open('GET', url, true);
-        xmlhttp.send(null);
-
-        view.classList.add(_cssClassNames.LOADING);
-    }
-
-    function _handleSubjectsReceived(xmlhttp) {
-        logIt(xmlhttp);
-    }
-
-    // progress on transfers from the server to the client (downloads)
-    function _updateProgress(oEvent) {
-        if (oEvent.lengthComputable) {
-            var percentComplete = oEvent.loaded / oEvent.total;
-            logIt('progress: ' + percentComplete);
-            // ...
-        } else {
-            // Unable to compute progress information since the total size is unknown
-        }
-    }
-
-    function _transferComplete(evt) {
-        view.classList.remove(_cssClassNames.LOADING);
-        logIt(evt);
-        var xmlhttp = evt.target;
-        var subjects = JSON.parse(xmlhttp.responseText)['subjects'];
-        _populateSubjectList(subjects);
-    }
-
-    function _transferFailed(evt) {
-        alert("An error occurred while transferring the file.");
-    }
-
-    function _transferCanceled(evt) {
-        alert("The transfer has been canceled by the user.");
+        xmlhttp.send();
     }
 
     /**
      *
      * @private
      */
-    function _populateSubjectList(subjects) {
+    function _populateSubjectList(subjects){
 
-        for (var i = 0; i < subjects.length; i++) {
+        _clearSubjectList();
+
+        for( var i=0; i<subjects.length; i++ ){
             _createAndAppendSubjectItem(subjects[i]);
         }
     }
 
-    function _clearSubjectList() {
+    function _clearSubjectList(){
         _subjectListItems = [];
-        while (_subjectListView.lastChild) {
+        while( _subjectListView.lastChild ){
             _subjectListView.removeChild(_subjectListView.lastChild);
         }
     }
@@ -106,8 +70,6 @@ var subjectSelectionScreen = function (view, spec) {
      * @return
      */
     function _createAndAppendSubjectItem(subject) {
-        //  the supplied subject is a json message as received from server.
-        //  it is stored as a data attribute of a subject item to forward it to next screen for exercise fetching
 
         var listItemView = document.createElement('li');
         listItemView.innerHTML = subject['name'];
@@ -116,6 +78,23 @@ var subjectSelectionScreen = function (view, spec) {
 
         item.on('select', _handleSubjectSelectedEvent);
         return item;
+
+        //  the supplied subject is a json message as received from server.
+        //  it is stored as a data attribute of a subject item to forward it to next screen for exercise fetching
+//        var subjectItem = $('<li></li>').data("message", subject);
+//        var nameElement = $('<span></span>').addClass('name').html(subject["name"]);
+//        var exerciseElement = $('<span></span>').addClass('exercises')
+//            .append($('<span></span>').html(subject['numberOfExercises']))
+//            .append($('<span></span>').html('exercises'));
+//
+//        subjectItem.append(nameElement)
+//            .append(exerciseElement)
+//            .on('click', {'message': subjectItem.data('message')}, function (event) {
+//                var subjectJson = event.data.message;
+//                localStorage.setItem('subject', JSON.stringify(subjectJson));
+//                _handleSubjectSelectedEvent();
+//            });
+//        return subjectItem;
     }
 
     return that;

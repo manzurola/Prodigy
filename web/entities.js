@@ -9,25 +9,25 @@
 var multiChoice = function (view, spec) {
 
     var CSS_CLASS_NAMES = {
-        NORMAL:         'multichoice',
-        MISTAKE:        'multichoice mistake',
+        NORMAL        : 'multichoice',
+        MISTAKE       : 'multichoice mistake',
         MISTAKE_STATIC: 'multichoice mistake-static',
-        CORRECT:        'multichoice correct',
+        CORRECT       : 'multichoice correct',
         CORRECT_STATIC: 'multichoice correct-static',
-        HIDDEN:         'multichoice hidden',
-        BOWING:         'bowing'
+        HIDDEN        : 'multichoice hidden',
+        BOWING        : 'bowing'
     };
 
     var that = entity(view, spec),
         baseAppendTo = that.appendTo;
 
     var STATES = {
-        NORMAL:  1,
+        NORMAL : 1,
         CORRECT: 2,
         MISTAKE: 3,
-        HINT:    4,
-        HIDDEN:  5,
-        BOWING:  6
+        HINT   : 4,
+        HIDDEN : 5,
+        BOWING : 6
     };
 
     var ANIMATIONS = {
@@ -121,8 +121,7 @@ var multiChoice = function (view, spec) {
     function _handleMistakeAnimationEndEvent() {
         view.removeEventListener('webkitAnimationEnd', arguments.callee);
         that.fireEvent('mistakeAnimationEnd');
-        _defaultMode();
-//        view.className = CSS_CLASS_NAMES.MISTAKE_STATIC;
+        view.className = CSS_CLASS_NAMES.MISTAKE_STATIC;
     }
 
     function _defaultMode() {
@@ -143,8 +142,7 @@ var multiChoice = function (view, spec) {
     function _handleCorrectAnimationEndEvent() {
         view.removeEventListener('webkitAnimationEnd', arguments.callee);
         that.fireEvent('correctAnimationEnd');
-//        view.className = CSS_CLASS_NAMES.CORRECT_STATIC;
-        _defaultMode();
+        view.className = CSS_CLASS_NAMES.CORRECT_STATIC;
     }
 
     function _animateHidden() {
@@ -154,7 +152,7 @@ var multiChoice = function (view, spec) {
 
     function _handleHiddenAnimationEndEvent() {
         view.removeEventListener('webkitAnimationEnd', arguments.callee);
-        //        _defaultMode();
+//        _defaultMode();
         that.fireEvent('hiddenAnimationEnd');
     }
 
@@ -176,7 +174,7 @@ var multiChoiceManager = function (view, spec) {
 
     var multiChoices = [],
         introTimer,
-        _introTimeOut = 0;
+        _introTimeOut = 100;
 
     /**
      * Initialize this object with supplied answers
@@ -308,7 +306,7 @@ var combo = function (view, spec) {
     function _makeComboCounter(count) {
 
         var countView = document.createElement('span');
-        //  DON'T DISPLAY combo less than 2
+        //  DONT DISPLAY combo less than 2
         return entity(countView, {'value': count}).setInnerText(count > 1 ? count : "");
     }
 
@@ -319,14 +317,14 @@ var combo = function (view, spec) {
 var health = function (view, spec) {
 
     var CSS_CLASS_NAMES = {
-        SELF:         'health',
-        HURT:         'hurt',
+        SELF        : 'health',
+        HURT        : 'hurt',
         LIVES_LEFT_3: 'lives-left-3',
         LIVES_LEFT_2: 'lives-left-2',
         LIVES_LEFT_1: 'lives-left-1',
         LIVES_LEFT_0: 'lives-left-0',
-        HEART:        'health-heart',
-        HIT_POINTS:   'health-strikes'
+        HEART       : 'health-heart',
+        HIT_POINTS  : 'health-strikes'
     };
 
     var that = entity(view);
@@ -447,9 +445,9 @@ var starCounter = function (view, spec) {
 var score = function (view, spec) {
 
     var CSS_CLASS_NAMES = {
-        SELF:       'score',
+        SELF      : 'score',
         MULTIPLIER: 'score-multiplier',
-        POINTS:     'score-points'
+        POINTS    : 'score-points'
     };
 
     var that = entity(view, spec);
@@ -470,10 +468,10 @@ var score = function (view, spec) {
         //  select increment jump, i.e. delta
         var delta;
         if (pointsToAdd >= 250) {
-            delta = 10;
+            delta = 20;
         } else {
-            //            delta = 1;
-            delta = 5;  //  testing
+//            delta = 1;
+            delta = 10;  //  testing
         }
         var total = points.getData()['value'] + pointsToAdd;
         points.setData({'value': total});
@@ -656,8 +654,8 @@ var Clock = function () {
 
     var _time = {
         milliseconds: 0,
-        seconds:      0,
-        minutes:      0
+        seconds     : 0,
+        minutes     : 0
     };
 
     //  INIT
@@ -730,7 +728,7 @@ var Clock = function () {
 var exercise = function (view, spec) {
 
     var CSS_CLASS_NAMES = {
-        SELF:           'exercise',
+        SELF          : 'exercise',
         EXERCISE_TITLE: 'exercise-title',
         SUBJECT_MATTER: 'exercise-subjectMatter'
     };
@@ -757,11 +755,11 @@ var exercise = function (view, spec) {
         for (var i = 0; i < questionsData.length; i++) {
 
             var currentQuestionData = {
-                'index':   i,
-                'html':    questionsData[i]['html'],
-                'blanks':  questionsData[i]['blanks'],
+                'index'  : i,
+                'html'   : questionsData[i]['html'],
+                'blanks' : questionsData[i]['blanks'],
                 'isFirst': !!(i === 0),
-                'isLast':  !!(i === questionsData.length - 1)
+                'isLast' : !!(i === questionsData.length - 1)
             };
 
             //  set the prev question to give to the new question as the current question of prev iteration
@@ -874,6 +872,7 @@ var exercise = function (view, spec) {
         }
     }
 
+
     function _makeQuestion(data) {
         var questionView = document.createElement('div');
         return question(questionView, data)
@@ -917,13 +916,13 @@ var exercise = function (view, spec) {
 var question = function (view, spec) {
 
     var CSS_CLASS_NAMES = {
-        SELF:         'question',
-        SOLVED:       'solved',
-        LAST:         'last',
-        FIRST:        'first',
-        BLANK:        'blank',
-        PREV:         'prev-question-button',
-        NEXT:         'next-question-button'
+        SELF  : 'question',
+        SOLVED: 'solved',
+        LAST  : 'last',
+        FIRST : 'first',
+        BLANK : 'blank',
+        PREV  : 'prev-question-button',
+        NEXT  : 'next-question-button'
     };
 
     var that = entity(view, spec),
@@ -947,19 +946,19 @@ var question = function (view, spec) {
         //  affects the prev and next buttons
         if (isFirst) {
             view.classList.add(CSS_CLASS_NAMES.FIRST);
-        }
-        if (isLast) {
+        } if (isLast) {
             view.classList.add(CSS_CLASS_NAMES.LAST);
         }
 
-        var blankElems = _extractBlankElems(view);
-        for (var i = 0; i < blankElems.length; i++) {
-            var blankView = blankElems[i];
+        var spanBlankClassNodeList = view.getElementsByClassName(CSS_CLASS_NAMES.BLANK);
+        for (var i = 0; i < spanBlankClassNodeList.length; i++) {
+
             var blankData = {
-                'index':          i,
-                'answers':        spec['blanks'][i]['answers'],
+                'index'         : i,
+                'answers'       : spec['blanks'][i]['answers'],
                 'parentQuestion': that
             };
+            var blankView = spanBlankClassNodeList[i];
             blanks.push(blank(blankView, blankData));
         }
 
@@ -1062,9 +1061,7 @@ var question = function (view, spec) {
     that.getBlankAt = function (index) {
         if (blanks[index]) {
             return blanks[index];
-        } else {
-            return null;
-        }
+        } else return null;
     };
 
     /**
@@ -1103,28 +1100,6 @@ var question = function (view, spec) {
         nextQuestion = next;
         return this;
     };
-
-    function _extractBlankElems(elem, dataArr) {
-//        var elemChildren = elem.childNodes;
-//        var elems = [];
-//        for (var i = 0; i < elemChildren.length; i++) {
-//            switch (elemChildren[i].className) {
-//                case CSS_CLASS_NAMES.BLANK:
-//                    elems.push(elemChildren[i]);
-//                    break;
-//                case CSS_CLASS_NAMES.BLANK_COMBO:
-//                    elems.push(elemChildren[i]);
-//                    break;
-//                case CSS_CLASS_NAMES.BLANK_BINARY:
-//                    elems.push(elemChildren[i]);
-//                    break;
-//            }
-//
-//        }
-
-        return elem.getElementsByClassName('blank');
-//        return elems;
-    }
 
     function _solve() {
         view.classList.add(CSS_CLASS_NAMES.SOLVED);
@@ -1167,27 +1142,21 @@ var question = function (view, spec) {
     return that;
 };
 
+
 var blank = function (view, spec) {
 
     var CSS_CLASS_NAMES = {
-        NORMAL:       'blank',
-        COMBO:        'combo-blank',
-        BINARY:       'binary-blank',
-        FOCUSED:      'focused',
-        CORRECT:      'correct',
-        MISTAKE:      'mistake',
-        HINT:         'hint',
-        STAR:         'star',
+        NORMAL      : 'blank',
+        FOCUSED     : 'focused',
+        CORRECT     : 'correct',
+        MISTAKE     : 'mistake',
+        HINT        : 'hint',
+        STAR        : 'star',
         CHILD_ANSWER: 'answer',
         CHILD_POINTS: 'points'
     };
 
     var that = entity(view, spec),
-        solution = {
-            isCorrect: false,
-            score:     100,
-            answers:   []
-        },
         baseRemove = that.remove;
 
     var _solved = false,
@@ -1196,28 +1165,18 @@ var blank = function (view, spec) {
         _parentQuestion = spec['parentQuestion'],
         _star = null,
         _points = null,
-        _choiceMatrix = [],
+        _answers = [] ,
         _index = spec['index'],
         _multiChoicer = null,
-        _solution = [],
-        _tokenChoiceMap = [],
-        _choiceCol;
+        _submittedAnswer = null;
+
+
     /**
      * Init
      */
     (function init() {
-//        _type = spec.type;
-//        switch (_type) {
-//            case 'plain':
-//                break;
-//            case 'combo':
-//                break;
-//            case 'binary':
-//                break;
-//        }
 
         view.className = CSS_CLASS_NAMES.NORMAL;
-
 
         that.on('select', function () {
 
@@ -1235,18 +1194,15 @@ var blank = function (view, spec) {
 
             //  prepare data object associated with answer and create DOM element
             var data = {
-                index:      answerIndex,
+                index     : answerIndex,
                 blankIndex: _index,
-                token:      spec['answers'][answerIndex]['token'],
-                isCorrect:  spec['answers'][answerIndex]['correct'],
-                feedback:   spec['answers'][answerIndex]['feedback'],
-                blank:      this
+                token     : spec['answers'][answerIndex]['token'],
+                isCorrect : spec['answers'][answerIndex]['correct'],
+                feedback  : spec['answers'][answerIndex]['feedback'],
+                blank     : this
             };
-            _choiceMatrix.push(_makeChoices(data));
+            _answers.push(_makeAnswer(data));
         }
-        _tokenChoiceMap = _createTokenChoiceMap(_choiceMatrix);
-        _choiceCol = 0;
-        _updateChoices(_choiceCol);
     })();
 
     that.removeInnerEntitiesAfterSolved = function () {
@@ -1264,47 +1220,31 @@ var blank = function (view, spec) {
      *
      * In any case, isSubmitted is set to true.
      *
-     * @param {answer} choice an answer object
+     * @param {entity} answer an answer object
      * @return {boolean} iSolved true if supplied token matches a correct answer, false otherwise.
      *
      */
-    that.submitAnswer = function (choice) {
-        if (_solved) {
-            return _solved;
+    that.submitAnswer = function (answer) {
+
+        //  get matching answer data
+        if (_submittedAnswer) {
+            _submittedAnswer.remove(); //  hide previously submitted answer
+        }
+        _submittedAnswer = answer.appendTo(this);
+        if (_submittedAnswer.isCorrect()) {
+            _solved = true;
+            _onCorrectSubmission();
+        } else {
+            //  FALSE SUBMISSION
+            _solved = false;
+            _onFalseSubmission();
         }
 
-        // Get wordIndex
-        var wordIndex = choice.getWordIndex(),
-            index = choice.getIndex(),
-            correct = choice.isCorrect();
-
-        if (correct) {
-            // If answer is the missing piece we expect,
-            // append it to the solution.
-            choice.hide()
-                .appendTo(this);
-            _solution.push(choice);
-
-            _choiceCol++;
-        }
-
-        if (choice.isLast()) {
-            if (correct) {
-                _solved = true;
-                _onCorrectSubmission();
-            }
-            else {
-                _onFalseSubmission();
-            }
-        }
-
-        _updateChoices(_choiceCol);
-
-        return correct;
+        return _solved;
     };
 
     that.getSubmittedAnswer = function () {
-        return _solution[_choiceCol];
+        return _submittedAnswer;
     };
 
     /**
@@ -1357,14 +1297,7 @@ var blank = function (view, spec) {
     };
 
     that.getAnswers = function () {
-        var choices = [];
-
-        for (var prop in _tokenChoiceMap) {
-            if (_tokenChoiceMap.hasOwnProperty(prop)) {
-                choices.push(_tokenChoiceMap[prop]);
-            }
-        }
-        return choices;
+        return _answers;
     };
 
     that.getPoints = function () {
@@ -1377,48 +1310,13 @@ var blank = function (view, spec) {
         return this;
     };
 
-    function _createTokenChoiceMap(choiceMatrix) {
-        var tokenChoiceMap = {};
-        for (var i = 0; i < choiceMatrix.length; i++) {
-            for (var j = 0; j < choiceMatrix[i].length; j++) {
-                var token = choiceMatrix[i][j].getToken();
-                if (!tokenChoiceMap.hasOwnProperty(token)) {
-                    tokenChoiceMap[token] = answer(document.createElement('div'), {
-                        token: token
-                    });
-                }
-            }
-        }
-        return tokenChoiceMap;
-    }
-
-    function _updateChoices(choiceIndex) {
-        // reset choices
-        for (var prop in _tokenChoiceMap) {
-            _tokenChoiceMap[prop].setIsCorrect(false);
-            _tokenChoiceMap[prop].setIsLast(false);
-        }
-        // update only correct choices at choiceIndex
-        for (var i = 0; i < _choiceMatrix.length; i++) {
-            var choices = _choiceMatrix[i];
-            if (choiceIndex < choices.length) {
-                if (choices[choiceIndex].isCorrect()) {
-                    _tokenChoiceMap[choices[choiceIndex].getToken()].setIsCorrect(true);
-                }
-                if (choiceIndex === choices.length - 1) {
-                    _tokenChoiceMap[choices[choiceIndex].getToken()].setIsLast(true);
-                }
-            }
-        }
-    }
-
     function _onCorrectSubmission() {
         _toNormalState();
 
         //  if the star was lost upon a false submission - do not show it again
         if (_starLost) {
             _star.hide();
-        } else {
+        }else{
         }
 
         //  the star is collected but is still drawn on screen.
@@ -1426,9 +1324,7 @@ var blank = function (view, spec) {
         _star.disableSelectEvents();
 
         view.classList.add(CSS_CLASS_NAMES.CORRECT);
-        _solution.map(function (choice) {
-            choice.show();
-        });
+        _submittedAnswer.show();
         _points.appendTo(that);
     }
 
@@ -1436,12 +1332,10 @@ var blank = function (view, spec) {
         _toNormalState();
 
         view.classList.add(CSS_CLASS_NAMES.MISTAKE);
-        for (var i = 0; i < _solution.length; i++) {
-            _solution[i].show();
-        }
+        _submittedAnswer.show();
 
         //  once a star is lost it is still drawn on screen. disable select events of that star
-        if (!_starLost) {
+        if( !_starLost ){
             _star.disableSelectEvents();
             _starLost = true;
         }
@@ -1457,371 +1351,11 @@ var blank = function (view, spec) {
         }
     }
 
-    function _makeChoices(spec) {
-
-        // parse answer token to words
-        // create an answer per each word with identical spec
-        // add property to spec with index of word in token
-
-        var answers = [],
-            words = [spec.token];//.split(' ');
-        logIt(words);
-
-        for (var i = 0; i < words.length; i++) {
-            var view = document.createElement('span');
-            view.className = CSS_CLASS_NAMES.CHILD_ANSWER;
-            var data = {
-                tokenIndex: i,
-                index:      spec.index,
-                blankIndex: spec.blankIndex,
-                token:      words[i],
-                isCorrect:  spec.isCorrect,
-                feedback:   spec.feedback,
-                blank:      this,
-                isLast:     i === words.length - 1 ? true : false
-            };
-            var ans = answer(view, data)
-                .on('select', _handleInnerEntitySelectEvent);
-            answers.push(ans);
-        }
-
-        return answers;
-    }
-
-    function _makePoints(amount) {
-        var pointsView = document.createElement('span');
-        pointsView.className = CSS_CLASS_NAMES.CHILD_POINTS;
-        return entity(pointsView, {'value': amount})
-            .setInnerText(amount)
-    }
-
-    function _makeStar() {
-        var starView = document.createElement('span');
-        starView.className = CSS_CLASS_NAMES.STAR;
-        return entity(starView, {})
+    function _makeAnswer(data) {
+        var answerView = document.createElement('span');
+        answerView.className = CSS_CLASS_NAMES.CHILD_ANSWER;
+        return answer(answerView, data)
             .on('select', _handleInnerEntitySelectEvent)
-    }
-
-    /**
-     * Captures inner entities select events and publishes them as a blank select event.
-     * Entities included are points, answer, and star.
-     * In case of a star, once it has been collected or lost, it is no longer valid for a select event.
-     * @private
-     */
-    function _handleInnerEntitySelectEvent() {
-
-        that.fireEvent('select');
-    }
-
-    return that;
-};
-
-var constructorBlank = function (view, spec) {
-
-    var CSS_CLASS_NAMES = {
-        NORMAL:       'blank',
-        FOCUSED:      'focused',
-        CORRECT:      'correct',
-        MISTAKE:      'mistake',
-        HINT:         'hint',
-        STAR:         'star',
-        CHILD_ANSWER: 'answer',
-        CHILD_POINTS: 'points'
-    };
-
-    var that = blank(view, spec),
-        solution = {
-            isCorrect: false,
-            score:     100,
-            answers:   []
-        },
-        baseRemove = that.remove;
-
-    var _solved = false,
-        _focused = false,
-        _starLost = false,
-        _parentQuestion = spec['parentQuestion'],
-        _star = null,
-        _points = null,
-        _choiceMatrix = [],
-        _index = spec['index'],
-        _multiChoicer = null,
-        _solution = [],
-        _tokenChoiceMap = [],
-        _choiceCol;
-
-    /**
-     * Init
-     */
-    (function init() {
-
-        view.className = CSS_CLASS_NAMES.NORMAL;
-
-        that.on('select', function () {
-
-        });
-
-        /*  create points view element with default amount of 100  */
-        _points = _makePoints(100);
-
-        /*  create star entity and append to view */
-        _star = _makeStar().appendTo(that);
-
-        //  for each answer in blank
-        for (var answerIndex = 0; answerIndex < spec['answers'].length; answerIndex++) {
-            //  note that answers should carry the number of blank they belong to
-
-            //  prepare data object associated with answer and create DOM element
-            var data = {
-                index:      answerIndex,
-                blankIndex: _index,
-                token:      spec['answers'][answerIndex]['token'],
-                isCorrect:  spec['answers'][answerIndex]['correct'],
-                feedback:   spec['answers'][answerIndex]['feedback'],
-                blank:      this
-            };
-            _choiceMatrix.push(_makeChoices(data));
-        }
-        _tokenChoiceMap = _createTokenChoiceMap(_choiceMatrix);
-        _choiceCol = 0;
-        _updateChoices(_choiceCol);
-    })();
-
-    that.removeInnerEntitiesAfterSolved = function () {
-        _star.remove();
-        _points.remove();
-        return this;
-    };
-
-    /**
-     * Puts the supplied token in the blank, and toggles the state of the blank based on an answer matching the token.
-     * If the supplied token matches a CORRECT answer to this blank
-     *      isSolved is set to true, the state of the blank is toggled to solved.
-     * Else then isSolved is set to false, the state of the blank is toggled unsolved
-     *      If the matching answer in case of a mistake contains a hint, the hasHint flag is set true.
-     *
-     * In any case, isSubmitted is set to true.
-     *
-     * @param {answer} choice an answer object
-     * @return {boolean} iSolved true if supplied token matches a correct answer, false otherwise.
-     *
-     */
-    that.submitAnswer = function (choice) {
-        if (_solved) {
-            return _solved;
-        }
-
-        // Get wordIndex
-        var wordIndex = choice.getWordIndex(),
-            index = choice.getIndex(),
-            correct = choice.isCorrect();
-
-        if (correct) {
-            // If answer is the missing piece we expect,
-            // append it to the solution.
-            _solution.push(choice);
-            choice.hide()
-                .appendTo(this);
-
-            _choiceCol++;
-        }
-
-        if (choice.isLast()) {
-            if (correct) {
-                _solved = true;
-                _onCorrectSubmission();
-            }
-            else {
-                _onFalseSubmission();
-            }
-        }
-
-        _updateChoices(_choiceCol);
-
-        return _solved;
-    };
-
-    that.getSubmittedAnswer = function () {
-        return _solution[_choiceCol];
-    };
-
-    /**
-     * Returns the star object if it is not lost, null otherwise.
-     */
-    that.getStar = function () {
-        return _starLost ? null : _star;
-    };
-
-    /**
-     * Displays the blank as focused and presents the multichoices contained.
-     * If a hint was showing when blank left focus, it is shown again.
-     * @return {*}
-     */
-    that.focus = function () {
-        if (!_focused) {
-            view.classList.add(CSS_CLASS_NAMES.FOCUSED);
-            _focused = true;
-        }
-        return this;
-    };
-
-    /**
-     * Displays the blank as unfocused, hides multichoices and any hint that is showing.
-     * @return {*}
-     */
-    that.unFocus = function () {
-        if (_focused) {
-            view.classList.remove(CSS_CLASS_NAMES.FOCUSED);
-            _focused = false;
-        }
-
-        return this;
-    };
-
-    that.getMultiChoiceManager = function () {
-        return _multiChoicer;
-    };
-
-    that.setMultiChoiceManager = function (manager) {
-        _multiChoicer = manager;
-    };
-
-    that.isSolved = function () {
-        return _solved;
-    };
-
-    that.getIndex = function () {
-        return _index;
-    };
-
-    that.getAnswers = function () {
-        var choices = [];
-
-        for (var prop in _tokenChoiceMap) {
-            if (_tokenChoiceMap.hasOwnProperty(prop)) {
-                choices.push(_tokenChoiceMap[prop]);
-            }
-        }
-        return choices;
-    };
-
-    that.getPoints = function () {
-        return _points.getData()['value'];
-    };
-
-    that.setPoints = function (amount) {
-        _points.getData()['value'] = amount;
-        _points.setInnerText(amount);
-        return this;
-    };
-
-    function _createTokenChoiceMap(choiceMatrix) {
-        var tokenChoiceMap = {};
-        for (var i = 0; i < choiceMatrix.length; i++) {
-            for (var j = 0; j < choiceMatrix[i].length; j++) {
-                var token = choiceMatrix[i][j].getToken();
-                if (!tokenChoiceMap.hasOwnProperty(token)) {
-                    tokenChoiceMap[token] = answer(document.createElement('div'), {
-                        token: token
-                    });
-                }
-            }
-        }
-        return tokenChoiceMap;
-    }
-
-    function _updateChoices(choiceIndex) {
-        // reset choices
-        for (var prop in _tokenChoiceMap) {
-            _tokenChoiceMap[prop].setIsCorrect(false);
-            _tokenChoiceMap[prop].setIsLast(false);
-        }
-        // update only correct choices at choiceIndex
-        for (var i = 0; i < _choiceMatrix.length; i++) {
-            var choices = _choiceMatrix[i];
-            if (choiceIndex < choices.length) {
-                if (choices[choiceIndex].isCorrect()) {
-                    _tokenChoiceMap[choices[choiceIndex].getToken()].setIsCorrect(true);
-                }
-                if (choiceIndex === choices.length - 1) {
-                    _tokenChoiceMap[choices[choiceIndex].getToken()].setIsLast(true);
-                }
-            }
-        }
-    }
-
-    function _onCorrectSubmission() {
-        _toNormalState();
-
-        //  if the star was lost upon a false submission - do not show it again
-        if (_starLost) {
-            _star.hide();
-        } else {
-        }
-
-        //  the star is collected but is still drawn on screen.
-        //  disable any select events.
-        _star.disableSelectEvents();
-
-        view.classList.add(CSS_CLASS_NAMES.CORRECT);
-        _solution.map(function (choice) {
-            choice.show();
-        });
-        _points.appendTo(that);
-    }
-
-    function _onFalseSubmission() {
-        _toNormalState();
-
-        view.classList.add(CSS_CLASS_NAMES.MISTAKE);
-        _solution.show();
-
-        //  once a star is lost it is still drawn on screen. disable select events of that star
-        if (!_starLost) {
-            _star.disableSelectEvents();
-            _starLost = true;
-        }
-
-    }
-
-    function _toNormalState() {
-
-        view.className = CSS_CLASS_NAMES.NORMAL;
-
-        if (_focused) {
-            view.classList.add(CSS_CLASS_NAMES.FOCUSED);
-        }
-    }
-
-    function _makeChoices(spec) {
-
-        // parse answer token to words
-        // create an answer per each word with identical spec
-        // add property to spec with index of word in token
-
-        var answers = [],
-            words = spec.token.split(' ');
-        logIt(words);
-
-        for (var i = 0; i < words.length; i++) {
-            var view = document.createElement('span');
-            view.className = CSS_CLASS_NAMES.CHILD_ANSWER;
-            var data = {
-                tokenIndex: i,
-                index:      spec.index,
-                blankIndex: spec.blankIndex,
-                token:      words[i],
-                isCorrect:  spec.isCorrect,
-                feedback:   spec.feedback,
-                blank:      this,
-                isLast:     i === words.length - 1 ? true : false
-            };
-            var ans = answer(view, data)
-                .on('select', _handleInnerEntitySelectEvent);
-            answers.push(ans);
-        }
-
-        return answers;
     }
 
     function _makePoints(amount) {
@@ -1882,6 +1416,7 @@ var feedback = function (view, spec) {
         }
     }
 
+
     return that;
 };
 
@@ -1895,13 +1430,11 @@ var answer = function (view, spec) {
     var that = entity(view, spec),
         baseRemove = that.remove;
 
-    var _token = spec.hasOwnProperty('token') ? spec['token'] : "",
-        _isCorrect = spec.hasOwnProperty('isCorrect') ? spec['isCorrect'] : false,
+    var _token = (typeof spec['token'] === 'string') ? spec['token'] : "",
+        _isCorrect = spec['isCorrect'],
         _hint,
-        _index = spec.hasOwnProperty('index') ? spec['index'] : -1,
-        _wordIndex = spec.hasOwnProperty('tokenIndex') ? spec['tokenIndex'] : -1,
-        _blankIndex = spec.hasOwnProperty('blankIndex') ? spec['blankIndex'] : -1,
-        _isLast = spec.hasOwnProperty('isLast') ? spec['isLast'] : false;
+        _index = spec['index'],
+        _blankIndex = spec['blankIndex'];
 
     (function init() {
         view.className = CSS_CLASS_NAMES.SELF;
@@ -1930,32 +1463,14 @@ var answer = function (view, spec) {
         return _isCorrect;
     };
 
-    that.setIsCorrect = function (val) {
-        _isCorrect = val;
-        return this;
-    };
-
     that.getBlankIndex = function () {
         return _blankIndex;
-    };
-
-    that.getWordIndex = function () {
-        return _wordIndex;
-    };
-
-    that.isLast = function () {
-        return _isLast;
-    };
-
-    that.setIsLast = function (val) {
-        _isLast = val;
-        return this;
     };
 
     function _makeHint(text) {
         var hintView = document.createElement('span');
         hintView.className = CSS_CLASS_NAMES.HINT;
-        //        hintView.innerHTML = text;
+//        hintView.innerHTML = text;
         return hint(hintView, {'text': text});
     }
 
@@ -1965,7 +1480,7 @@ var answer = function (view, spec) {
 var hint = function (view, spec) {
 
     var CSS_CLASS_NAMES = {
-        SELF:  'hint',
+        SELF : 'hint',
         CHILD: 'hint-elem'
     };
 
@@ -1979,6 +1494,7 @@ var hint = function (view, spec) {
         view.className = CSS_CLASS_NAMES.SELF;
         words = _createWordElements(spec['text']);
     }());
+
 
     that.remove = function () {
         while (view.lastChild) {
@@ -2020,16 +1536,16 @@ var hint = function (view, spec) {
             elems.push(wordElem);
             index++;
         }
-        //        for (var i = 0; i < words.length; i++) {
-        //            var wordElem = document.createElement('span');
-        //            if( words[i] === " "){
-        //                words[i] = "&nbsp" + words[i+1];
-        //            }
-        //            wordElem.innerHTML = words[i];
-        //            wordElem.className = CSS_CLASS_NAMES.CHILD;
-        //            logIt('word in hint: ' + words[i]);
-        //            elems.push(wordElem);
-        //        }
+//        for (var i = 0; i < words.length; i++) {
+//            var wordElem = document.createElement('span');
+//            if( words[i] === " "){
+//                words[i] = "&nbsp" + words[i+1];
+//            }
+//            wordElem.innerHTML = words[i];
+//            wordElem.className = CSS_CLASS_NAMES.CHILD;
+//            logIt('word in hint: ' + words[i]);
+//            elems.push(wordElem);
+//        }
         return elems;
     }
 
@@ -2045,7 +1561,7 @@ var hint = function (view, spec) {
 var progressBar = function (view, spec) {
 
     var CSS_CLASS_NAMES = {
-        SELF:  'progressBar',
+        SELF : 'progressBar',
         INNER: 'progressBar-inner'
     };
 
@@ -2128,82 +1644,6 @@ var list = function (view, spec) {
     return that;
 };
 
-/**
- * Parses the text supplied at instantiation by the supplied delimiter.
- *
- * @param view
- * @param spec
- * @return {*}
- */
-var segmenter = function (view, spec) {
-    var CSS_CLASS_NAMES = {
-        SELF:    'segmenter',
-        SEGMENT: 'segmenter-segment'
-    };
 
-    var that = entity(view, spec),
-        baseRemove = that.remove,
-        baseAppendTo = that.appendTo;
-
-    var _segments = [],
-        _rawText = spec['text'] || '',
-        _delimiter = spec['delimiter'] || '';
-
-    (function init() {
-        view.className = CSS_CLASS_NAMES.SELF;
-        _segments = _segmentize(spec['text']);
-    }());
-
-    that.remove = function () {
-        while (view.lastChild) {
-            view.removeChild(view.lastChild);
-        }
-        return baseRemove.apply(this);
-    };
-
-    that.appendTo = function (parent) {
-        baseAppendTo.apply(this, [parent]);
-        for (var i = 0; i < _segments.length; i++) {
-            _appendChildWithDelay(_segments[i], (i + 1) * 80);
-        }
-    };
-
-    function _createAndAppendChild(txt) {
-        var childView = document.createElement('span');
-        childView.innerHTML = txt;
-        view.appendChild(childView);
-        return entity(childView, {}).hide();
-    }
-
-    function _segmentize(txt) {
-
-        var rawSegments = txt.split(_delimiter);
-        var elems = [];
-        var index = 0;
-
-        while (index < rawSegments.length) {
-            var innerHtml = "";
-            if (rawSegments[index] === " ") {
-                innerHtml = "&nbsp";
-                index++;
-            }
-            innerHtml += rawSegments[index];
-            var element = document.createElement('span');
-            element.innerHTML = innerHtml;
-            element.className = CSS_CLASS_NAMES.CHILD;
-            elems.push(element);
-            index++;
-        }
-        return elems;
-    }
-
-    function _appendChildWithDelay(child, delay) {
-        setTimeout(function () {
-            view.appendChild(child);
-        }, delay);
-    }
-
-    return that;
-};
 
 

@@ -1,3 +1,13 @@
+function Star(elem) {
+    Entity.call(this, elem);
+}
+Star.prototype = Object.create(Entity.prototype);
+Star.prototype.constructor = Star;
+Star.prototype.load = function() {
+    this.setClassName('star')
+        .appendChild(new Entity('span').setClassName('icon-star'));
+    return this;
+};
 /**
  * User: guyman
  * Date: 6/22/14
@@ -6,8 +16,8 @@
 function Blank(elem) {
     Entity.call(this, elem);
     this.__answers__ = [];
-    this.__inside__ = null;
     this.__star__ = null;
+    this.__answerInBlank__ = null;
     this.__isSolved__ = false;
     this.__isSelected__ = false;
     this.__attemptsMade__ = 0;
@@ -20,9 +30,9 @@ Blank.prototype.isSolved = function () {
 };
 Blank.prototype.load = function (spec) {
     var data = {
-        answers:     null,
+        answers:     [],
         maxAttempts: 4
-    };
+    },clone;
     extend(data, spec);
     for (var i = 0; i < data.answers.length; i++) {
         var answer = new Answer('span')
@@ -31,18 +41,31 @@ Blank.prototype.load = function (spec) {
     }
     this.__maxAttempts__ = data.maxAttempts;
     this.setClassName('blank');
-    this.__star__ = new Entity('span').setClassName('answer')
-        .appendChild(new Entity('span').setClassName('icon-star'));
-    this.appendChild(this.__star__);
+    this.__star__ = new Star('span').load();
+    this.__answerInBlank__ = new Entity('span').setClassName('answer-in-blank');
+    this.appendChild(this.__star__)
+        .appendChild(this.__answerInBlank__)
+        .setSize(this.getSize());
+    log('star size: ', this.__star__.getSize());
     return this;
 };
 Blank.prototype.select = function () {
+    if (this.__isSelected__) {
+        return this;
+    }
+//    if (!this.__isSolved__) {
+//        this.setSize(this.__star__.getSize());
+//        this.__star__.show();
+//    }
     this.__isSelected__ = true;
     this.addClasses('select')
         .fire('select');
     return this;
 };
 Blank.prototype.deselect = function () {
+    if (!this.__isSelected__) {
+        return this;
+    }
     this.__isSelected__ = false;
     this.removeClasses('select')
         .fire('deselect');
@@ -50,26 +73,37 @@ Blank.prototype.deselect = function () {
 };
 Blank.prototype.fill = function (answer) {
 
-    var copyOfAnswer = answer.clone(true),
-        origToken = answer.getToken;
+//    log('ANSWER TOKEN: ' + answer.getToken());
 
+
+    var newAnswer = answer.clone();
+    log ('answer clone', newAnswer);
     this.__attemptsMade__ += 1;
+    answer.submit();
     if (answer.isCorrect()) {
-        if (this.__inside__) {
-            this.__inside__.remove();
+        if (this.__answerInBlank__) {
+            this.__answerInBlank__.remove();
         }
 
         this.__isSolved__ = true;
-        this.__star__.remove();
+        this.__answerInBlank__ = newAnswer.hide();
+//            .appendTo(this);
+
+//        log('ANSWER SIZE: ', answer.measure());
+        this.addClasses('solved')
+            .setSize(this.__answerInBlank__.measure());
+//            .appendChild(this.__answerInBlank__);
+        this.__answerInBlank__.show();
+        //        this.__star__.remove();
         // If correct on first attempt
         if (this.__attemptsMade__ === 1) {
-//            answer.setFeedbackToken('GREAT!');
-//            answer.on('webkitAnimationEnd', function (target) {
-//                target.setText(origToken);
-//            })
+            //            answer.setFeedbackToken('GREAT!');
+            //            answer.on('webkitAnimationEnd', function (target) {
+            //                target.setText(origToken);
+            //            })
         }
-        this.appendChild(copyOfAnswer.submit());
-        this.__inside__ = copyOfAnswer;
+    } else {
+        this.removeClasses('solved');
     }
 
     log('attemptsMade: ' + this.__attemptsMade__);

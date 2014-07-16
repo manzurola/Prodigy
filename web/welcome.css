@@ -9,10 +9,6 @@
     margin: 0 auto;
 }
 
-.welcome .blank{
-    padding-left: -0.5em;
-    padding-right: -0.5em;
-}
 
 .welcome .title {
     /*background: -webkit-linear-gradient(top, #1a82f7 25%, rgba(0,0,0,0.8) 100%);*/
@@ -21,7 +17,8 @@
     -webkit-text-stroke: 0.05em black;
     -webkit-text-fill-color: transparent;
 
-    text-shadow: 0 -0.05em 0.05em rgba(0,0,140,0.25), 0 -0.15em 0.2em rgba(100,100,100,0.25);
+    text-shadow: 0.05em 0.075em 0.025em rgba(0,0,0,0.25) !important;
+
 
     text-transform: uppercase;
     position: absolute;
@@ -41,7 +38,7 @@
 
     /*-webkit-text-stroke: 4px black;*/
     /*-webkit-text-fill-color: white;*/
-    font-family: grobold;
+
     position: absolute;
     display: block;
     top: 4em;

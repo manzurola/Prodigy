@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Prodigy</title>
+    <link rel="stylesheet" type="html/css" href="http://fonts.googleapis.com/css?family=Combo|Poiret One">
     <link rel="stylesheet" type="html/css" href="main.css"/>
     <link rel="stylesheet" type="html/css" href="game.css"/>
     <link rel="stylesheet" type="html/css" href="exerciseFailedScreen.css"/>
@@ -11,6 +12,9 @@
     <link rel="stylesheet" type="html/css" href="subjects.css"/>
     <link rel="stylesheet" type="html/css" href="exercises.css"/>
     <link rel="stylesheet" type="html/css" href="pausedScreen.css"/>
+    <script src="libs/jquery-1.8.2.js"></script>
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>-->
     <script src="logger.js"></script>
     <script src="shared.js"></script>
     <script src="entities.js"></script>
@@ -38,15 +42,53 @@
     <div id="subjects" class="screen">
         <div id="backButtonSubjectSelectionScreen" class="backButton"></div>
         <div id="subjectSelectionTitle" class="question">Select a Subject</div>
-        <ul id="subjectList" class="list"></ul>
+        <ul id="subjectList" class="list">
+        </ul>
     </div><!-- END SUBJECTS SCREEN -->
     <!-- EXERCISES SCREEN START -->
     <div id="exercises" class='screen'>
         <div id="backButtonExerciseSelectionScreen" class="backButton"></div>
         <div id="exerciseSelectionTitle" class="question">Select an Exercise</div>
-        <ul id="exerciseList" class="list"></ul>
+        <div id="difficultyLevel"></div>
+        <ul id="exerciseList" class="list">
+            <!--<li><span class="title">Supply the correct tense</span><span-->
+            <!--class="questions"><span>22</span>questions<span></span></span></li>-->
+        </ul>
     </div>
+    <!-- END EXERCISES SCREEN -->
+    <!-- EXERCISE LOADING START -->
+    <!--<div id="exerciseLoadScreen" class='screen'>-->
+        <!--<div class="title" id="subjectName"></div>-->
+        <!--<div class="title" id="exerciseTitle"></div>-->
+    <!--</div>-->
+    <!-- END EXERCISE LOADING SCREEN -->
+    <!-- GAME SCREEN START -->
     <div id="game" class="screen">
+        <!--<ul id='question'></ul>-->
+        <!--<div id="feedback"></div>-->
+        <!--<ul id="multichoicer"></ul>-->
+        <!--<div id='health-wrapper' class='health'>-->
+            <!--&lt;!&ndash;<span id="heart">&#xf08a;</span>&ndash;&gt;-->
+            <!--&lt;!&ndash;<span>X</span>&ndash;&gt;-->
+            <!--&lt;!&ndash;<span id="health"></span>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div id="chest">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="heart left side top"></div>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="heart center">&hearts;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="heart right side"></div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--</div>-->
+        <!--<div class="score">-->
+            <!--<span class="score-multiplier"></span>-->
+            <!--<span>score</span>-->
+            <!--<span class='score-points'>120</span>-->
+        <!--</div>-->
+        <!--<div id="time-wrapper">-->
+            <!--<span id="time">-->
+                <!--<span id="minutes"></span>:-->
+                <!--<span id="seconds"></span>-->
+            <!--</span>-->
+            <!--<span id="clockIcon">&#xf017;</span>-->
+        <!--</div>-->
     </div>
     <!-- END GAME SCREEN -->
     <!-- PAUSE_SCREEN SCREEN START -->

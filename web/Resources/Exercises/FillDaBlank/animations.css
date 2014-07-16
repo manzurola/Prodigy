@@ -12,11 +12,10 @@
     100% {
         -webkit-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
-        -webkit-box-shadow: inset 0 0 0.5em rgba(0, 0, 0, 0.35),
+        box-shadow: inset 0 0 0.5em rgba(0, 0, 0, 0.35),
         inset 0 0 2px black,
         0 0 2px black,
-        0 0.1275em 0.25em rgba(0, 0, 0, 0.35),
-        0 0.25em 0.5em rgba(0, 0, 0, 0.35);
+        0 0.2em 0.5em rgba(0, 0, 0, 0.7);
     }
 }
 
@@ -43,10 +42,10 @@
 
 @-webkit-keyframes answerCorrect {
     0% {
-        -webkit-transform: scale(1.3);
-    }
-    100% {
         -webkit-transform: scale(1);
+    }
+    10% {
+        -webkit-transform: scale(1.3);
     }
 }
 
@@ -80,7 +79,6 @@
         -webkit-transform: translate3d(0.01em, -0.02em,0) rotate(-2deg) scale(1);
     }
 }
-
 
 @-webkit-keyframes rotate1080 {
     0% {
@@ -253,8 +251,6 @@
         bottom: 0;
     }
 }
-
-
 
 @-webkit-keyframes popit {
     0% {

@@ -14,7 +14,6 @@
 
 
 window.onload = function (e) {
-    logIt("main.js onload fired");
     MAIN.init();
 };
 
@@ -28,12 +27,12 @@ var MAIN = (function () {
         prodigy = entity(document.getElementById('prodigy'), {});
         _screens = {
             welcome          : welcomeScreen(document.createElement('div'), {}).appendTo(prodigy),
-            subjectSelection : subjectSelectionScreen(document.getElementById('subjects')).remove(),
-            exerciseSelection: exerciseSelectionScreen(document.getElementById('exercises')).remove(),
-            activeGame       : game(document.getElementById('game')).remove(),
-            pausedGame       : pausedGameScreen(document.getElementById('pausedScreen')).remove(),
-            exerciseFailed   : exerciseFailedScreen(document.getElementById('exerciseFailedScreen')).remove(),
-            exerciseCleared  : exerciseClearedScreen(document.getElementById('exerciseClearedScreen')).remove()
+            subjectSelection : subjectSelectionScreen(document.getElementById('subjects')).hide(),
+            exerciseSelection: exerciseSelectionScreen(document.getElementById('exercises')).hide(),
+            activeGame       : game(document.getElementById('game')).hide(),
+            pausedGame       : pausedGameScreen(document.getElementById('pausedScreen')).hide(),
+            exerciseFailed   : exerciseFailedScreen(document.getElementById('exerciseFailedScreen')).hide(),
+            exerciseCleared  : exerciseClearedScreen(document.getElementById('exerciseClearedScreen')).hide()
         };
 
         //  configure pub-sub module communication
@@ -46,8 +45,7 @@ var MAIN = (function () {
             .on('back', _handleExerciseSelectionBackButtonPressEvent);
 
         _screens.activeGame.on('exerciseCleared',_handleExerciseClearedEvent)
-            .on('exerciseFailed', _handleExerciseFailedEvent)
-            .on('pause', _handleGamePauseEvent);
+            .on('exerciseFailed', _handleExerciseFailedEvent).on('pause', _handleGamePauseEvent);
 
         _screens.pausedGame.on('resume', _handlePausedScreenResumeEvent)
             .on('restart', _handlePausedScreenRestartEvent)
@@ -61,27 +59,23 @@ var MAIN = (function () {
             .on('newTopScore', function (screen) {
 
             });
-
         _activeStateModule = _screens.welcome.show();
-
-        _loadTestFrame();
-        _registerFrameMessage();
     }
 
     function _handleWelcomeScreenStartEvent(){
-        _screens.welcome.remove();
-        _screens.subjectSelection.appendTo(prodigy).loadSubjects();
+        _screens.welcome.hide();
+        _screens.subjectSelection.show().loadSubjects();
     }
 
     function _handleSubjectSelectionBackButtonPressEvent(){
-        _screens.subjectSelection.remove();
-        _screens.welcome.appendTo(prodigy);
+        _screens.subjectSelection.hide();
+        _screens.welcome.show();
     }
 
     function _handleSubjectSelectedEvent(){
-        _screens.subjectSelection.remove();
+        _screens.subjectSelection.hide();
         var selectedSubject = _screens.subjectSelection.getSelectedSubject();
-        _screens.exerciseSelection.appendTo(prodigy).loadExercisesBySubject(selectedSubject);
+        _screens.exerciseSelection.show().loadExercisesBySubject(selectedSubject);
     }
 
     /**
@@ -89,83 +83,69 @@ var MAIN = (function () {
      * @private
      */
     function _handleExerciseSelectedEvent(exerciseSelectionScreen){
-        _screens.exerciseSelection.remove();
+        _screens.exerciseSelection.hide();
         _screens.activeGame.initExercise(exerciseSelectionScreen.getSelectedExercise())
-            .appendTo(prodigy)
+            .show()
             .start();
     }
 
     function _handleExerciseSelectionBackButtonPressEvent(){
-        _screens.exerciseSelection.remove();
-        _screens.subjectSelection.appendTo(prodigy).loadSubjects();
+        _screens.exerciseSelection.hide();
+        _screens.subjectSelection.show().loadSubjects();
     }
 
     function _handlePausedScreenQuitEvent(){
-        _screens.pausedGame.remove();
-        _screens.activeGame.quit().remove();
-        _screens.exerciseSelection.appendTo(prodigy);
+        _screens.pausedGame.hide();
+        _screens.activeGame.quit().hide();
+        _screens.exerciseSelection.show();
     }
 
     function _handleGamePauseEvent(){
-        _screens.pausedGame.appendTo(prodigy);
+        _screens.pausedGame.show();
     }
 
     function _handlePausedScreenResumeEvent(){
-        _screens.pausedGame.remove();
+        _screens.pausedGame.hide();
         _screens.activeGame.resume();
     }
 
     function _handlePausedScreenRestartEvent(){
-        _screens.pausedGame.remove();
+        _screens.pausedGame.hide();
         _screens.activeGame.restart();
     }
 
     function _handleExerciseClearedEvent(){
         //  get stats from game screen
         _activeStateModule = _screens.exerciseCleared
-            .appendTo(prodigy)
+            .show()
             .setGrade(_screens.activeGame.getGrade());
     }
 
     function _handleExerciseFailedEvent(){
         //  do not hide active game screen
-        _activeStateModule = _screens.exerciseFailed.appendTo(prodigy);
+        _activeStateModule = _screens.exerciseFailed.show();
     }
 
     function _handleExerciseFailedScreenRestartEvent(){
-        _screens.exerciseFailed.remove();
+        _screens.exerciseFailed.hide();
         _screens.activeGame.restart();
     }
 
     function _handleExerciseFailedScreenQuitEvent(){
-        _screens.exerciseFailed.remove();
-        _screens.activeGame.quit().remove();
-        _screens.exerciseSelection.appendTo(prodigy);
+        _screens.exerciseFailed.hide();
+        _screens.activeGame.quit().hide();
+        _screens.exerciseSelection.show();
     }
 
     function _handleExerciseClearedScreenRestartEvent(){
-        _screens.exerciseCleared.remove();
-        _screens.activeGame.appendTo(prodigy).restart();
+        _screens.exerciseCleared.hide();
+        _screens.activeGame.show().restart();
     }
 
     function _handleExerciseClearedScreenQuitEvent(){
-        _screens.exerciseCleared.remove();
-        _screens.activeGame.quit().remove();
-        _screens.exerciseSelection.appendTo(prodigy);
-    }
-
-    function _registerFrameMessage() {
-        window.addEventListener("message", function(e){
-            logIt("message received from frame: ");
-            logIt(e.data);
-            logIt(e.origin);
-            logIt(e.source);
-        }, false);
-    }
-
-    function _loadTestFrame() {
-        APPLICATION.do();
-        document.getElementById("frame").src = "testScreen.html";
+        _screens.exerciseCleared.hide();
+        _screens.activeGame.quit().hide();
+        _screens.exerciseSelection.show();
     }
 
     return {
@@ -175,3 +155,5 @@ var MAIN = (function () {
         }
     }
 })();
+
+

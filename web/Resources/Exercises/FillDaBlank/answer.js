@@ -6,7 +6,7 @@
 function Answer(elem) {
     Entity.call(this, elem);
     this.__isCorrect__ = false;
-    this.__token__ = '';
+    this.__token__ = new Entity('span');
     this.__feedbackToken__ = '';
     this.__isSubmitted__ = false;
 }
@@ -20,15 +20,14 @@ Answer.prototype.load = function(spec) {
     };
     extend(data, spec);
     this.__isCorrect__ = data.correct;
-    this.__token__ = new Entity('span')
-        .setClassName('token')
-        .setText(data.token);
     this.__feedbackToken__ = new Entity('span')
         .setClassName('feedback-token')
         .setText('GREAT!');
     this.setClassName('answer')
         .appendChild(this.__token__)
-        .appendChild(this.__feedbackToken__);
+        .setToken(data.token);
+//        .appendChild(this.__feedba
+// ckToken__);
 
     return this;
 };
@@ -39,10 +38,13 @@ Answer.prototype.submit = function () {
     } else {
         this.addClasses('wrong');
     }
+//    this.__token__.hide();
+//    this.__feedbackToken__.show();
+
     this.on('animationEnd', function(target) {
         log('animation end', target);
-        target.removeClasses('correct')
-            .removeClasses('wrong');
+//        target.__feedbackToken__.hide();
+//        this.__token__.show();
     }, this);
     this.fire('submit');
     return this;

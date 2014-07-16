@@ -65,7 +65,7 @@ Exercise.prototype.submitAnswer = function (answer) {
         return this;
     }
 
-    answer.submit();
+
     var thisBlank = this.scene.question.getSelectedBlank();
     thisBlank.fill(answer);
 //    answer.submit() //submit progresses question to next blank if one exists

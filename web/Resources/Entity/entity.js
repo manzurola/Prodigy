@@ -175,8 +175,9 @@ Entity.prototype.clone = function (deep) {
     log('clone called on: ', [this]);
     for (var prop in this) {
         if (this.hasOwnProperty(prop) && prop !== '__element') {
-            if (prop.hasOwnProperty('__element')) {
-                log ('cloning entity prop', this[prop]);
+            log('prop', prop);
+            if (this[prop].hasOwnProperty('__element')) {
+                log('cloning entity prop', this[prop]);
                 clone[prop] = this[prop].clone(deepClone);
             }
             else if (prop !== '__element') {
@@ -224,7 +225,42 @@ Entity.prototype.hide = function () {
     this.__element.style.visibility = 'hidden';
     return this;
 };
-
+Entity.prototype.isHidden = function () {
+    return this.__element.style.visibility === 'hidden';
+};
+Entity.prototype.getSize = function () {
+    var size = {
+        width:  0,
+        height: 0
+    };
+    size.width = this.__element.offsetWidth + 'px';
+    size.height = this.__element.offsetHeight + 'px';
+    return size;
+};
+Entity.prototype.setSize = function (size) {
+    this.__element.width = size.width;
+    this.__element.height = size.height;
+    return this;
+};
+Entity.prototype.measure = function () {
+    // if element is part of dom, no need to do fancy work
+    if (document.contains(this.__element)) {
+       return this.getSize();
+    }
+    // store original settings before manipulating object
+    var isHidden = this.isHidden(),
+        position = this.getStyle('position');
+    this.hide()
+        .setStyle('position', 'absolute');
+    document.body.appendChild(this.__element);
+    var size = this.getSize();
+    this.setStyle('position', position);
+    if (!isHidden) {
+        this.show();
+    }
+    this.remove();
+    return size;
+};
 Entity.presets = {};
 Entity.presets['default'] = function () {
 
