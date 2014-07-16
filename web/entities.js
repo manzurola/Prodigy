@@ -31,6 +31,7 @@ var multiChoice = function (view, spec) {
     };
 
     var ANIMATIONS = {
+
         CORRECT: 0,
         MISTAKE: 1
     };
